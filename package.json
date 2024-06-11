@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db": "json-server --watch ./src/db/db.json -p 3000"
+    "db": "json-server --watch ./src/db/db.json -p 3005"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -19,7 +19,8 @@
     "mui-image": "^1.0.7",
     "next": "14.2.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.5"
   },
   "devDependencies": {
     "@iconify/react": "^5.0.1",

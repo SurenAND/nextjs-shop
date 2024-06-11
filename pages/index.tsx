@@ -1,8 +1,10 @@
-import { Inter } from "next/font/google";
-import { Box } from "@mui/material";
-
-const inter = Inter({ subsets: ["latin"] });
+import Layout from "@/src/components/Layout/Layout";
+import HomeTemplate from "@/src/components/template/Home/Home";
 
 export default function Home() {
-  return <Box>Home</Box>;
+  return (
+    <Layout>
+      <HomeTemplate />
+    </Layout>
+  );
 }
