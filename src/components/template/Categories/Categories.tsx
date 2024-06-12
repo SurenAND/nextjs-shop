@@ -1,15 +1,18 @@
 import { Box, Typography } from "@mui/material";
 import CardComp from "../../Card/Card";
+import { useGetProductByCategory } from "./hooks/useGetProductByCategory";
 
-const CategoriesTemplate = ({ category, data, isLoading, error }: any) => {
+const CategoriesTemplate = ({ category }: any) => {
   const removeHyphens = (str: string): string => {
     return str?.replace(/-/g, " ");
   };
 
+  const { data, isLoading, isError } = useGetProductByCategory(category);
+
   return (
     <Box component="main">
       {isLoading && <Typography variant="body1">Loading ...</Typography>}
-      {error && <Typography variant="body1">Error</Typography>}
+      {isError && <Typography variant="body1">Error</Typography>}
       <Typography
         variant="h1"
         sx={{
@@ -32,8 +35,11 @@ const CategoriesTemplate = ({ category, data, isLoading, error }: any) => {
           gap: 5,
         }}
       >
-        {data &&
-          data?.map((item: any) => <CardComp key={item.id} data={item} />)}
+        {data && data?.length > 0 ? (
+          data?.map((item: any) => <CardComp key={item.id} data={item} />)
+        ) : (
+          <Typography variant="body1">No products found</Typography>
+        )}
       </Box>
     </Box>
   );

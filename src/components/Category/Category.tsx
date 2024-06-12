@@ -1,15 +1,14 @@
 import Link from "next/link";
-import { useFetchData } from "../../hooks/useFetchData";
-import { getCategoriesData } from "../../services/getData";
 import { Box, Stack, Typography } from "@mui/material";
+import { useGetCategories } from "./hooks/useGetCategories";
 
 const Category = () => {
-  const { data, isLoading, error } = useFetchData(getCategoriesData);
+  const { data, isLoading, isError } = useGetCategories();
   return (
     <Box component="section" mb={5} p={4}>
       {isLoading && <p>Loading ...</p>}
-      {error && <p>Error</p>}
-      {data && (
+      {isError && <p>Error</p>}
+      {data && data.length > 0 && (
         <Stack gap={3} px={3}>
           <Typography variant="h3" fontSize="1.5rem" fontWeight="bold">
             Shop Our Top Categories
@@ -25,8 +24,8 @@ const Category = () => {
             {data?.map((item: any) => {
               return (
                 <Link
-                  href={`/category/${item.categoryName}`}
-                  key={item.id}
+                  href={`/category/${item?.categoryName}`}
+                  key={item?.id}
                   className="relative min-w-max"
                 >
                   <Typography
@@ -41,12 +40,12 @@ const Category = () => {
                       fontWeight: "600",
                     }}
                   >
-                    {item.title}
+                    {item?.title}
                   </Typography>
                   <img
                     className="w-full h-full"
-                    src={item.image}
-                    alt={item.title}
+                    src={item?.image}
+                    alt={item?.title}
                   />
                 </Link>
               );

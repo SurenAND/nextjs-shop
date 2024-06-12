@@ -1,11 +1,13 @@
-import ProductRating from "./productRating";
-import ProductSizes from "./productSizes";
+import { useGetProductById } from "./hooks/useGetProductById";
+import ProductRating from "./components/productRating";
+import ProductSizes from "./components/productSizes";
 
-const ProductTemplate = ({ category, data, isLoading, error }: any) => {
+const ProductTemplate = ({ category, productId }: any) => {
+  const { data, isLoading, isError } = useGetProductById(productId);
   return (
     <main className="p-10 mt-10">
       {isLoading && <p>Loading ...</p>}
-      {error && <p>Error</p>}
+      {isError && <p>Error</p>}
       {data && (
         <section
           className="relative flex flex-col break-words rounded-md"

@@ -175,8 +175,6 @@ function LoginTemplate() {
                     fullWidth
                     sx={{
                       backgroundColor: orange[500],
-                      transition: "all 0.6s ease-in-out",
-                      transform: checked ? "scale(1.05)" : "scale(1)",
                       ":hover": { backgroundColor: orange[600] },
                     }}
                     onClick={

@@ -1,4 +1,8 @@
-import { HOME_PAGE_ROUTE, LOGIN_PAGE_ROUTE } from "../../../constant/routes";
+import {
+  DASHBOARD_PAGE_ROUTE,
+  HOME_PAGE_ROUTE,
+  LOGIN_PAGE_ROUTE,
+} from "../../../constant/routes";
 import { useUserContext } from "../../../context/authContext";
 import {
   Box,
@@ -11,7 +15,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { removeFromLocalStorage } from "../../../lib/helper";
 import { AuthReducerAction } from "../../../types/enums";
 import Link from "next/link";
@@ -23,7 +27,7 @@ type HeaderProps = {
 };
 
 export default function Header({ isLogin }: HeaderProps) {
-  const { pathname } = useRouter();
+  const { pathname, push: pushRouter } = useRouter();
   const { state, dispatch } = useUserContext();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -53,6 +57,13 @@ export default function Header({ isLogin }: HeaderProps) {
 
     handleClose();
   };
+
+  // fix Hydration
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <Stack
@@ -107,8 +118,8 @@ export default function Header({ isLogin }: HeaderProps) {
       </Box>
       <List sx={{ display: "flex", gap: 1 }}>
         <ListItem sx={{ cursor: "pointer" }}>
-          {isLogin ? (
-            <Typography id="user-text" onClick={handleClick}>
+          {isClient && isLogin ? (
+            <Typography noWrap id="user-text" onClick={handleClick}>
               Hi, {state.userName}
             </Typography>
           ) : (
@@ -139,7 +150,9 @@ export default function Header({ isLogin }: HeaderProps) {
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         {state.role === "admin" ? (
-          <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+          <MenuItem onClick={() => pushRouter(DASHBOARD_PAGE_ROUTE)}>
+            Dashboard
+          </MenuItem>
         ) : null}
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
