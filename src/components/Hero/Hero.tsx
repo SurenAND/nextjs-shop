@@ -1,4 +1,4 @@
-import { ABOUT_US_PAGE_ROUTE } from "@/src/constant/routes";
+import { MainRoutes } from "@/src/constant/routes";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
@@ -51,7 +51,7 @@ const Hero = () => {
             },
           }}
         >
-          <Link href={ABOUT_US_PAGE_ROUTE}>Learn More</Link>
+          <Link href={MainRoutes.ABOUT_US}>Learn More</Link>
         </Button>
       </Stack>
     </Box>

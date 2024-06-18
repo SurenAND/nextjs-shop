@@ -1,4 +1,4 @@
-import { BASE_URL } from "../constant/url";
+import { BASE_URL } from "@/src/constant/url";
 
 export const getUserData = async (email: string, password: string) => {
   const data = await fetch(

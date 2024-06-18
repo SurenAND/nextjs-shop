@@ -29,3 +29,12 @@ export function generate_token(length: number) {
   }
   return b.join("");
 }
+
+export function stringAvatar(name: string) {
+  return {
+    sx: {
+      bgcolor: "#2980b9",
+    },
+    children: `${name.split(" ")[0][0]}`,
+  };
+}

@@ -1,5 +1,14 @@
-export const CART_PAGE_ROUTE = "/cart";
-export const LOGIN_PAGE_ROUTE = "/login";
-export const HOME_PAGE_ROUTE = "/";
-export const ABOUT_US_PAGE_ROUTE = "/about-us";
-export const DASHBOARD_PAGE_ROUTE = "/dashboard";
+export const MainRoutes = {
+  HOME: "/",
+  ABOUT_US: "/about-us",
+  CART: "/cart",
+  LOGIN: "/login",
+  DASHBOARD: "/dashboard",
+};
+
+export const DashboardRoutes = {
+  DASHBOARD: "?view=dashboard",
+  ADD_PRODUCT: "?view=add-product",
+  EDIT_PRODUCT: "?view=edit-product",
+  DELETE_PRODUCT: "?view=delete-product",
+};

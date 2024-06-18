@@ -1,4 +1,4 @@
-import Layout from "@/src/components/Layout/Layout";
+import Layout from "@/src/components/Layout/MainLayout/Layout";
 import CategoriesTemplate from "@/src/components/template/Categories/Categories";
 import ProductTemplate from "@/src/components/template/Product/Product";
 import { Typography } from "@mui/material";

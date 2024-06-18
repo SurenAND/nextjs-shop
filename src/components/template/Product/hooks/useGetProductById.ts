@@ -6,5 +6,6 @@ export const useGetProductById = (productId: string) => {
   return useQuery<ProductDataType>({
     queryKey: ["products-by-id"],
     queryFn: () => getProductById(productId),
+    refetchOnMount: "always",
   });
 };

@@ -1,4 +1,5 @@
 export enum ROLES {
+  moderator = "moderator",
   admin = "admin",
   user = "user",
 }

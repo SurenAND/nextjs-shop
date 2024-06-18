@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useReducer } from "react";
 import { AuthReducerAction } from "../types/enums";
-import { getFromLocalStorage } from "../lib/helper";
+import { getCookie } from "cookies-next";
 
 type AuthState = {
   isLogin: boolean;
@@ -8,9 +8,9 @@ type AuthState = {
   role: string;
 };
 
-const isLogin = getFromLocalStorage("token");
-const userName = getFromLocalStorage("userName");
-const userRole = getFromLocalStorage("role");
+const isLogin = getCookie("token");
+const userName = getCookie("userName");
+const userRole = getCookie("role");
 
 const authInit = {
   isLogin: isLogin ? true : false,

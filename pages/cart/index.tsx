@@ -1,4 +1,4 @@
-import Layout from "@/src/components/Layout/Layout";
+import Layout from "@/src/components/Layout/MainLayout/Layout";
 import CartTemplate from "@/src/components/template/Cart/Cart";
 
 export default function Cart() {

@@ -1,6 +1,7 @@
 import { AuthContextProvider } from "@/src/context/authContext";
+import { theme } from "@/src/theme/theme";
 import "@/styles/globals.css";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -11,8 +12,10 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <QueryClientProvider client={queryClient}>
         <AuthContextProvider>
-          <CssBaseline />
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
         </AuthContextProvider>
       </QueryClientProvider>
     </>

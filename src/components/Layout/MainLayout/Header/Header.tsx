@@ -1,9 +1,4 @@
-import {
-  DASHBOARD_PAGE_ROUTE,
-  HOME_PAGE_ROUTE,
-  LOGIN_PAGE_ROUTE,
-} from "../../../constant/routes";
-import { useUserContext } from "../../../context/authContext";
+import { useUserContext } from "../../../../context/authContext";
 import {
   Box,
   InputAdornment,
@@ -16,11 +11,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { removeFromLocalStorage } from "../../../lib/helper";
-import { AuthReducerAction } from "../../../types/enums";
+import { AuthReducerAction, ROLES } from "../../../../types/enums";
 import Link from "next/link";
 import { menuItems } from "./data";
 import { useRouter } from "next/router";
+import { MainRoutes } from "@/src/constant/routes";
+import { Main } from "next/document";
+import Search from "@/src/components/Search/Search";
+import { deleteCookie } from "cookies-next";
 
 type HeaderProps = {
   isLogin: boolean;
@@ -42,9 +40,9 @@ export default function Header({ isLogin }: HeaderProps) {
   };
 
   const handleLogout = () => {
-    removeFromLocalStorage("role");
-    removeFromLocalStorage("userName");
-    removeFromLocalStorage("token");
+    deleteCookie("role");
+    deleteCookie("userName");
+    deleteCookie("token");
 
     dispatch({
       type: AuthReducerAction.LOGOUT,
@@ -76,46 +74,10 @@ export default function Header({ isLogin }: HeaderProps) {
         py: { md: 2, xs: 1 },
       }}
     >
-      <Link href={HOME_PAGE_ROUTE}>
+      <Link href={MainRoutes.HOME}>
         <img className="w-36" alt="shop" src="/shop.png" />
       </Link>
-      <Box
-        sx={{
-          flexGrow: 1,
-          color: "#6b7280",
-          textAlign: "left",
-          px: 2,
-          py: 0.5,
-          bgcolor: "#e5e7eb",
-          borderRadius: "6px",
-        }}
-      >
-        <TextField
-          variant="standard"
-          InputProps={{
-            disableUnderline: true,
-            startAdornment: (
-              <InputAdornment position="start">
-                <img
-                  src="/searchIcon.svg"
-                  alt="search icon"
-                  className="w-[14px] h-[14px]"
-                />
-              </InputAdornment>
-            ),
-          }}
-          type="text"
-          sx={{
-            width: "100%",
-
-            bgcolor: "#e5e7eb",
-            border: "none",
-            "&:focus": {
-              outline: "none",
-            },
-          }}
-        />
-      </Box>
+      <Search />
       <List sx={{ display: "flex", gap: 1 }}>
         <ListItem sx={{ cursor: "pointer" }}>
           {isClient && isLogin ? (
@@ -123,7 +85,7 @@ export default function Header({ isLogin }: HeaderProps) {
               Hi, {state.userName}
             </Typography>
           ) : (
-            <Link href={LOGIN_PAGE_ROUTE}>Login</Link>
+            <Link href={MainRoutes.LOGIN}>Login</Link>
           )}
         </ListItem>
         {menuItems.map((item, index) => (
@@ -149,8 +111,8 @@ export default function Header({ isLogin }: HeaderProps) {
         }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        {state.role === "admin" ? (
-          <MenuItem onClick={() => pushRouter(DASHBOARD_PAGE_ROUTE)}>
+        {state.role === ROLES.admin || state.role === ROLES.moderator ? (
+          <MenuItem onClick={() => pushRouter(MainRoutes.DASHBOARD)}>
             Dashboard
           </MenuItem>
         ) : null}
