@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import CardComp from "../../Card/Card";
-import { useGetProductByCategory } from "./hooks/useGetProductByCategory";
+import CardComp from "../../shared/Card/Card";
+import { useGetProductByCategory } from "@/src/hooks/categoriesHooks";
 
 const CategoriesTemplate = ({ category }: any) => {
   const removeHyphens = (str: string): string => {

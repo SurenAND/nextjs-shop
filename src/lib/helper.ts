@@ -1,24 +1,3 @@
-export function getFromLocalStorage(key: string): string | null {
-  if (typeof window !== "undefined") {
-    return window.localStorage.getItem(key);
-  }
-  return null;
-}
-
-export function removeFromLocalStorage(key: string) {
-  if (typeof window !== "undefined") {
-    return window.localStorage.removeItem(key);
-  }
-  return null;
-}
-
-export function setToLocalStorage(key: string, value: string) {
-  if (typeof window !== "undefined") {
-    return window.localStorage.setItem(key, value);
-  }
-  return null;
-}
-
 export function generate_token(length: number) {
   let a =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");

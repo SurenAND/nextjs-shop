@@ -2,7 +2,7 @@ export const MainRoutes = {
   HOME: "/",
   ABOUT_US: "/about-us",
   CART: "/cart",
-  LOGIN: "/login",
+  REGISTER: "/register",
   DASHBOARD: "/dashboard",
 };
 

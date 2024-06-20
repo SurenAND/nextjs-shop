@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import CategoryComponent from "@/src/components/Category/Category";
+import CategoryComponent from "@/src/components/template/Home/components/_Category/Category";
 import Layout from "@/src/components/Layout/MainLayout/Layout";
 
 function Category() {

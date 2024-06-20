@@ -1,27 +1,24 @@
-import { ReactNode, createContext, useContext, useReducer } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import { AuthReducerAction } from "../types/enums";
+import { AuthReducerActionType, AuthStateType } from "../types/types";
 import { getCookie } from "cookies-next";
 
-type AuthState = {
-  isLogin: boolean;
-  userName: string;
-  role: string;
-};
-
-const isLogin = getCookie("token");
-const userName = getCookie("userName");
-const userRole = getCookie("role");
-
 const authInit = {
-  isLogin: isLogin ? true : false,
-  userName: userName ? userName : "",
-  role: userRole ? userRole : "",
+  isLogin: false,
+  userName: "",
+  role: "",
 };
 
 function authReducer(
-  state: AuthState,
-  action: { type: string; payload: any }
-): AuthState {
+  state: AuthStateType,
+  action: AuthReducerActionType
+): AuthStateType {
   switch (action.type) {
     case AuthReducerAction.SET_USER:
       return {
@@ -41,8 +38,8 @@ function authReducer(
 }
 
 export const AuthContext = createContext<{
-  state: AuthState;
-  dispatch: React.Dispatch<{ type: string; payload: any }>;
+  state: AuthStateType;
+  dispatch: React.Dispatch<AuthReducerActionType>;
 }>({
   state: authInit,
   dispatch: () => {},
@@ -52,6 +49,22 @@ export const useUserContext = () => useContext(AuthContext);
 
 export function AuthContextProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(authReducer, authInit);
+
+  useEffect(() => {
+    const isLogin = getCookie("token");
+    const userName = getCookie("userName");
+    const role = getCookie("role");
+
+    dispatch({
+      type: AuthReducerAction.SET_USER,
+      payload: {
+        isLogin: !!isLogin,
+        userName: userName ? userName : "",
+        role: role ? role : "",
+      },
+    });
+  }, []);
+
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       {children}

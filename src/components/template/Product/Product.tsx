@@ -1,52 +1,89 @@
-import { useGetProductById } from "./hooks/useGetProductById";
-import ProductRating from "./components/productRating";
-import ProductSizes from "./components/productSizes";
+import { useGetProductById } from "@/src/hooks/globalHooks";
+import ProductRating from "./components/_ProductRating/ProductRating";
+import ProductSizes from "./components/_ProductSizes/ProductSizes";
+import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import Image from "next/image";
 
 const ProductTemplate = ({ category, productId }: any) => {
   const { data, isLoading, isError } = useGetProductById(productId);
   return (
-    <main className="p-10 mt-10">
-      {isLoading && <p>Loading ...</p>}
-      {isError && <p>Error</p>}
+    <Box component="main" sx={{ p: 5, mt: 5 }}>
+      {isLoading && <Typography variant="h2">Loading ...</Typography>}
+      {isError && <Typography variant="h2">Error</Typography>}
       {data && (
-        <section
-          className="relative flex flex-col break-words rounded-md"
+        <Stack
+          sx={{
+            position: "relative",
+            overflowWrap: "break-word",
+            borderRadius: 8,
+          }}
           key={data?.id}
         >
-          <div className="flex flex-wrap">
-            <img
-              className="flex-grow rounded-3xl shadow-2xl max-h-[35rem] object-cover "
-              src={data?.image}
-              alt={data?.name}
-            />
-            <div className="lg:ps-12 lg:flex-[0_0_auto] lg:w-1/2">
-              <h2 className="font-bold text-4xl mt-6 mb-2">{data?.name}</h2>
-              <p className="text-gray-500 mb-20">{data?.description}</p>
-              <form className="flex flex-col p-5">
-                <div className="flex">
-                  <h3 className="text-3xl mb-2">${data?.price?.toFixed(2)}</h3>
-                  <input className="opacity-0" defaultValue={data?.price} />
-                </div>
+          <Stack flexDirection="row" flexWrap="wrap">
+            <Box width="50%" position="relative">
+              <Image
+                style={{ flexGrow: 1, borderRadius: 24 }}
+                src={data?.image}
+                alt={data?.name}
+                fill
+                objectFit="cover"
+              />
+            </Box>
+            <Box
+              sx={{
+                paddingInlineStart: { lg: 24 },
+                flex: { lg: "0_0_auto" },
+                width: { lg: "50%" },
+              }}
+            >
+              <Typography
+                variant="h2"
+                fontWeight="900"
+                fontSize="2.25rem"
+                mt={3}
+                mb={1}
+              >
+                {data?.name}
+              </Typography>
+              <Typography variant="body1" mb={10} color="#6b7280">
+                {data?.description}
+              </Typography>
+              <Stack p={3}>
+                <Stack flexDirection="row">
+                  <Typography variant="h3" fontSize="1.875rem" mb={1}>
+                    ${data?.price?.toFixed(2)}
+                  </Typography>
+                  <TextField sx={{ opacity: 0 }} defaultValue={data?.price} />
+                </Stack>
                 {/* reviews */}
-                <div className="flex mb-5">
+                <Stack flexDirection="row" mb={3}>
                   <ProductRating />
-                  <span className="ms-4">603 reviews</span>
-                </div>
+                  <Typography variant="body2" marginInlineStart={2}>
+                    603 reviews
+                  </Typography>
+                </Stack>
                 {/* sizes */}
                 {category === "sneakers" ? <ProductSizes /> : null}
 
-                <button
-                  className="mb-4 py-3 px-20 rounded-lg shadow-sm bg-purple-600 text-white"
+                <Button
+                  sx={{
+                    mb: 2,
+                    py: 1,
+                    px: 10,
+                    borderRadius: 8,
+                    bgcolor: "#9333ea",
+                    color: "white",
+                  }}
                   type="submit"
                 >
                   Add to cart
-                </button>
-              </form>
-            </div>
-          </div>
-        </section>
+                </Button>
+              </Stack>
+            </Box>
+          </Stack>
+        </Stack>
       )}
-    </main>
+    </Box>
   );
 };
 

@@ -7,8 +7,8 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.has("token");
   const role = request.cookies.get("role");
 
-  // Redirect to home if trying to access login page and token exists
-  if (pathname.startsWith("/login") && token) {
+  // Redirect to home if trying to access register page and token exists
+  if (pathname.startsWith("/register") && token) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -24,5 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/dashboard"],
+  matcher: ["/register", "/dashboard"],
 };
