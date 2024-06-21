@@ -1,4 +1,5 @@
 import { Box, InputAdornment, TextField } from "@mui/material";
+import Image from "next/image";
 
 export default function Search() {
   return (
@@ -19,10 +20,11 @@ export default function Search() {
           disableUnderline: true,
           startAdornment: (
             <InputAdornment position="start">
-              <img
+              <Image
                 src="/searchIcon.svg"
                 alt="search icon"
-                className="w-[14px] h-[14px]"
+                width={14}
+                height={14}
               />
             </InputAdornment>
           ),

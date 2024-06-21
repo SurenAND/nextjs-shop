@@ -16,7 +16,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { MainRoutes } from "@/src/constant/routes";
 import Image from "next/image";
-import { useLogin, useSignUp } from "@/src/hooks/registerHooks";
+import { useLogin, useSignUp } from "@/src/api/auth/auth.queries";
 
 function RegisterTemplate() {
   const router = useRouter();

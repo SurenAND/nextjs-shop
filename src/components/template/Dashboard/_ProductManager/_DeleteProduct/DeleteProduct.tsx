@@ -2,9 +2,12 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IconButton, Stack, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ProductDataType } from "@/src/types/types";
-import { useDeleteProduct } from "@/src/hooks/dashboardHooks";
-import { useGetAllProducts } from "@/src/hooks/globalHooks";
+import { ProductDataType } from "@/src/api/product/product.type";
+import {
+  useDeleteProduct,
+  useGetProducts,
+} from "@/src/api/product/product.queries";
+import Image from "next/image";
 
 const columns: GridColDef<ProductDataType>[] = [
   {
@@ -21,19 +24,20 @@ const columns: GridColDef<ProductDataType>[] = [
     headerName: "Image",
     renderCell: (params) => {
       return (
-        <Box>
-          <img
-            src={params.value}
-            alt="product"
-            style={{
-              width: 100,
-              height: 120,
-              borderRadius: 10,
-              objectFit: "cover",
-              margin: "10px auto",
-            }}
-          />
-        </Box>
+        <Stack alignItems="center">
+          <Box height={120} width={100} position="relative">
+            <Image
+              src={params.value}
+              alt="product"
+              fill
+              style={{
+                borderRadius: 10,
+                objectFit: "cover",
+                margin: "10px auto",
+              }}
+            />
+          </Box>
+        </Stack>
       );
     },
     width: 200,
@@ -91,7 +95,7 @@ const columns: GridColDef<ProductDataType>[] = [
 ];
 
 function DeleteProduct() {
-  const { data } = useGetAllProducts();
+  const { data } = useGetProducts();
   const row = Array.isArray(data) ? data : []; // to fix type error
 
   return (

@@ -4,6 +4,7 @@ import AddProduct from "./_ProductManager/_AddProduct/AddProduct";
 import { useUserContext } from "@/src/context/authContext";
 import EditProduct from "./_ProductManager/_EditProduct/EditProduct";
 import DeleteProduct from "./_ProductManager/_DeleteProduct/DeleteProduct";
+import Inventory from "./_ProductManager/_Inventory/Inventory";
 
 function DashboardTemplate() {
   const searchParams = useSearchParams().get("view");
@@ -15,6 +16,7 @@ function DashboardTemplate() {
       alignItems="center"
       height="100vh"
     >
+      {searchParams === "inventory" && <Inventory />}
       {searchParams === "add-product" && <AddProduct />}
       {searchParams === "edit-product" && <EditProduct />}
       {searchParams === "delete-product" && <DeleteProduct />}
