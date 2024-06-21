@@ -1,3 +1,4 @@
+import InventoryIcon from "@mui/icons-material/Inventory";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -5,6 +6,11 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PeopleIcon from "@mui/icons-material/People";
 
 export const drawerProductsItems = [
+  {
+    title: "Inventory",
+    view: "inventory",
+    icon: <InventoryIcon />,
+  },
   {
     title: "Add Product",
     view: "add-product",

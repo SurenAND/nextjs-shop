@@ -1,11 +1,13 @@
 import { MainRoutes } from "@/src/constant/routes";
 import { Box, Button, Stack, Typography } from "@mui/material";
+import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
   return (
     <Box component="section" sx={{ position: "relative" }}>
-      <img className="w-full" src="/landing.webp" alt="Shop" />
+      <Image src="/landing.webp" alt="Shop" height={854} width={1920} />
+
       <Stack
         sx={{
           width: { xs: "50%", sm: "66%", lg: "33%" },

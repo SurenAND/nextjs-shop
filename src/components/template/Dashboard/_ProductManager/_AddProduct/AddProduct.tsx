@@ -1,6 +1,6 @@
-import { useAddProduct } from "@/src/hooks/dashboardHooks";
+import { useCreateProduct } from "@/src/api/product/product.queries";
+import { ProductDataType } from "@/src/api/product/product.type";
 import { generate_token } from "@/src/lib/helper";
-import { FormDataType } from "@/src/types/types";
 import {
   Button,
   Card,
@@ -20,10 +20,10 @@ function AddProduct() {
   const { register, handleSubmit, reset } = useForm();
   const [img, setImg] = useState<string>("");
 
-  const { mutate } = useAddProduct();
+  const { mutate } = useCreateProduct();
 
   function handleForm(data: FieldValues) {
-    const formData = data as FormDataType;
+    const formData = data as ProductDataType;
     formData.price = Number(formData.price);
     mutate({ ...formData, id: generate_token(3), image: img });
     reset();

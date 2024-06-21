@@ -7,14 +7,14 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AuthReducerAction, ROLES } from "../../../../types/enums";
 import Link from "next/link";
 import { menuItems } from "./data";
 import { useRouter } from "next/router";
 import { MainRoutes } from "@/src/constant/routes";
 import Search from "@/src/components/shared/Search/Search";
-import { deleteCookie } from "cookies-next";
+import Image from "next/image";
 
 type HeaderProps = {
   isLogin: boolean;
@@ -36,19 +36,9 @@ export default function Header({ isLogin }: HeaderProps) {
   };
 
   const handleLogout = () => {
-    deleteCookie("role");
-    deleteCookie("userName");
-    deleteCookie("token");
-
     dispatch({
       type: AuthReducerAction.LOGOUT,
-      payload: {
-        isLogin: false,
-        userName: "",
-        role: "",
-      },
     });
-
     handleClose();
   };
 
@@ -64,7 +54,7 @@ export default function Header({ isLogin }: HeaderProps) {
       }}
     >
       <Link href={MainRoutes.HOME}>
-        <img className="w-36" alt="shop" src="/shop.png" />
+        <Image src="/shop.png" alt="shop" width={144} height={144} />
       </Link>
       <Search />
       <List sx={{ display: "flex", gap: 1 }}>

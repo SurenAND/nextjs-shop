@@ -11,7 +11,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { FormDataType } from "@/src/types/types";
 import {
   ChangeEvent,
   Dispatch,
@@ -22,8 +21,11 @@ import {
 import { FieldValues, useForm } from "react-hook-form";
 import UploadFileButton from "./_UploadButton/UploadButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useEditProduct } from "@/src/hooks/dashboardHooks";
-import { useGetProductById } from "@/src/hooks/globalHooks";
+import {
+  useGetProductById,
+  useUpdateProduct,
+} from "@/src/api/product/product.queries";
+import { ProductDataType } from "@/src/api/product/product.type";
 
 export default function EditForm({
   setShowForm,
@@ -38,7 +40,7 @@ export default function EditForm({
   const [img, setImg] = useState<string>("");
   const [category, setCategory] = useState<string>("");
 
-  const { mutate } = useEditProduct();
+  const { mutate } = useUpdateProduct();
   const { data } = useGetProductById(productId);
 
   useEffect(() => {
@@ -48,21 +50,19 @@ export default function EditForm({
         price: data.price,
         description: data.description,
       });
-      setCategory(data.category); // Set the category state
+      setCategory(data.category);
       setImg(data.image);
     }
   }, [data, reset]);
 
   function handleForm(data: FieldValues) {
-    const formData = data as FormDataType;
+    const formData = data as ProductDataType;
     formData.price = Number(formData.price);
     mutate({
-      newProduct: {
-        ...formData,
-        id: productId,
-        image: img,
-        category: category,
-      },
+      ...formData,
+      id: productId,
+      image: img,
+      category: category,
     });
     reset();
     setShowForm(false);
@@ -121,8 +121,8 @@ export default function EditForm({
                   labelId="select-label"
                   id="select"
                   label="Product Category"
-                  value={category} // Bind the category state to the Select value
-                  onChange={(e) => setCategory(e.target.value as string)} // Update the category state on change
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value as string)}
                 >
                   <MenuItem value="furniture">Furniture</MenuItem>
                   <MenuItem value="hand-bag">Hand-bag</MenuItem>
@@ -140,7 +140,6 @@ export default function EditForm({
               </FormControl>
               <FormControl>
                 <label style={{ marginBottom: 10 }}>Product Image :</label>
-                {/* <TextField type="file" onChange={handleFile} /> */}
                 <UploadFileButton handleFile={handleFile} />
               </FormControl>
 
