@@ -3,6 +3,7 @@ import CategoriesTemplate from "@/src/components/template/Categories/Categories"
 import ProductTemplate from "@/src/components/template/Product/Product";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
+import { ReactElement } from "react";
 
 export default function CategorySlug() {
   const { slug } = useRouter().query;
@@ -12,7 +13,7 @@ export default function CategorySlug() {
   }
 
   return (
-    <Layout>
+    <>
       {slug.length === 1 ? (
         <CategoriesTemplate category={slug[0] as string} />
       ) : slug.length === 2 ? (
@@ -21,6 +22,10 @@ export default function CategorySlug() {
           productId={slug[1] as string}
         />
       ) : null}
-    </Layout>
+    </>
   );
 }
+
+CategorySlug.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
