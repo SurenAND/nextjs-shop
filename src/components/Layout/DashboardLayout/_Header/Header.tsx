@@ -1,12 +1,13 @@
 import { useUserContext } from "@/src/context/authContext";
 import { Avatar, IconButton, Stack } from "@mui/material";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import Link from "next/link";
 import { MainRoutes } from "@/src/constant/routes";
 import Search from "@/src/components/shared/Search/Search";
 import { stringAvatar } from "@/src/lib/helper";
+import Image from "next/image";
 
 export default function Header({
   toggleSidebar,
@@ -18,7 +19,7 @@ export default function Header({
   return (
     <Stack direction="row" alignItems="center" gap={5} p={3}>
       <Link href={MainRoutes.HOME}>
-        <img className="w-36" alt="shop" src="/shop.png" />
+        <Image src="/shop.png" alt="shop" width={144} height={144} />
       </Link>
       <IconButton
         sx={{

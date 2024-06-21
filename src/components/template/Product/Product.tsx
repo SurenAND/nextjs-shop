@@ -1,4 +1,4 @@
-import { useGetProductById } from "@/src/hooks/globalHooks";
+import { useGetProductById } from "@/src/api/product/product.queries";
 import ProductRating from "./components/_ProductRating/ProductRating";
 import ProductSizes from "./components/_ProductSizes/ProductSizes";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";

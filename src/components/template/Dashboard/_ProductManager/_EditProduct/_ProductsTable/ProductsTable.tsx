@@ -1,10 +1,11 @@
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { IconButton } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Dispatch, SetStateAction } from "react";
-import { ProductDataType } from "@/src/types/types";
-import { useGetAllProducts } from "@/src/hooks/globalHooks";
+import { ProductDataType } from "@/src/api/product/product.type";
+import { useGetProducts } from "@/src/api/product/product.queries";
+import Image from "next/image";
 
 function ProductsTable({
   setShowForm,
@@ -28,19 +29,20 @@ function ProductsTable({
       headerName: "Image",
       renderCell: (params) => {
         return (
-          <Box>
-            <img
-              src={params.value}
-              alt="product"
-              style={{
-                width: 100,
-                height: 120,
-                borderRadius: 10,
-                objectFit: "cover",
-                margin: "10px auto",
-              }}
-            />
-          </Box>
+          <Stack alignItems="center">
+            <Box height={120} width={100} position="relative">
+              <Image
+                src={params.value}
+                alt="product"
+                fill
+                style={{
+                  borderRadius: 10,
+                  objectFit: "cover",
+                  margin: "10px auto",
+                }}
+              />
+            </Box>
+          </Stack>
         );
       },
       width: 200,
@@ -96,8 +98,8 @@ function ProductsTable({
       },
     },
   ];
-  const { data } = useGetAllProducts();
-  const row = Array.isArray(data) ? data : []; // to fix type error
+  const { data } = useGetProducts();
+  const row = Array.isArray(data) ? data : [];
 
   return (
     <Box sx={{ height: 700, width: "100%" }}>

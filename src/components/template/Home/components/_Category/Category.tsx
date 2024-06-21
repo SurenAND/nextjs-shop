@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Box, Stack, Typography } from "@mui/material";
-import { useGetCategories } from "@/src/hooks/homeHooks";
+import { useGetCategories } from "@/src/api/category/category.queries";
+import Image from "next/image";
 
 const Category = () => {
   const { data, isLoading, isError } = useGetCategories();
@@ -42,10 +43,12 @@ const Category = () => {
                   >
                     {item?.title}
                   </Typography>
-                  <img
-                    className="w-full h-full"
+                  <Image
                     src={item?.image}
                     alt={item?.title}
+                    height={296}
+                    width={230}
+                    objectFit="cover"
                   />
                 </Link>
               );

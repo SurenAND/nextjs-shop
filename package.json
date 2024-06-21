@@ -15,7 +15,7 @@
     "@mui/icons-material": "^5.15.19",
     "@mui/material": "^5.15.19",
     "@mui/x-data-grid": "^7.7.0",
-    "@types/mui-image": "^1.0.5",
+    "axios": "^1.7.2",
     "cookies-next": "^4.2.1",
     "json-server": "^0.17.4",
     "next": "^14.2.4",

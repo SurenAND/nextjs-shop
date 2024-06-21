@@ -1,11 +1,4 @@
-export type FormDataType = {
-  id: string;
-  name: string;
-  price: number;
-  category: string;
-  description: string;
-  image: string;
-};
+import { AuthReducerAction } from "./enums";
 
 export type AuthStateType = {
   isLogin: boolean;
@@ -13,35 +6,14 @@ export type AuthStateType = {
   role: string;
 };
 
-export type AuthReducerActionType = {
-  type: string;
-  payload: {
-    isLogin: boolean;
-    userName: string;
-    role: string;
-  };
-};
-
-export type ProductDataType = {
-  id: string;
-  name: string;
-  price: number;
-  category: string;
-  image: string;
-  description: string;
-};
-
-export type CategoriesDataType = {
-  id: number;
-  title: string;
-  image: string;
-  categoryName: string;
-};
-
-export type UserDataType = {
-  id: string;
-  email: string;
-  userName: string;
-  password: string;
-  role: string;
-};
+export type AuthReducerActionType =
+  | {
+      type: AuthReducerAction.LOGIN;
+      payload: {
+        userName: string;
+        role: string;
+      };
+    }
+  | {
+      type: AuthReducerAction.LOGOUT;
+    };
