@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { IconButton, Stack } from "@mui/material";
+import { IconButton, Stack, Typography } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Dispatch, SetStateAction } from "react";
 import { ProductDataType } from "@/src/api/product/product.type";
@@ -102,22 +102,32 @@ function ProductsTable({
   const row = Array.isArray(data) ? data : [];
 
   return (
-    <Box sx={{ height: 700, width: "100%" }}>
-      <DataGrid
-        key={data?.id}
-        showCellVerticalBorder
-        disableRowSelectionOnClick
-        rowHeight={150}
-        rows={row}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10, 15]}
-      />
-    </Box>
+    <Stack
+      spacing={5}
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+    >
+      <Typography variant="h4" fontWeight={900} textTransform="uppercase">
+        Edit Products
+      </Typography>
+      <Box sx={{ height: 700, width: "100%" }}>
+        <DataGrid
+          key={data?.id}
+          showCellVerticalBorder
+          disableRowSelectionOnClick
+          rowHeight={150}
+          rows={row}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+          pageSizeOptions={[5, 10, 15]}
+        />
+      </Box>
+    </Stack>
   );
 }
 
