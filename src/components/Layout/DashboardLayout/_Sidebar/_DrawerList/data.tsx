@@ -30,14 +30,14 @@ export const drawerProductsItems = [
 
 export const drawerUserItems = [
   {
-    title: "Admin Settings",
-    view: "admin-settings",
+    title: "Admin Manager",
+    view: "admin-manager",
     icon: <AdminPanelSettingsIcon />,
     roleToSee: ["moderator"],
   },
   {
     title: "Users",
-    view: "users",
+    view: "users-manager",
     icon: <PeopleIcon />,
     roleToSee: ["admin", "moderator"],
   },

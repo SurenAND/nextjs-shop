@@ -4,9 +4,14 @@ import { generate_token } from "@/src/lib/helper";
 import { AuthReducerAction } from "@/src/types/enums";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import { useMutation } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { UserDataType } from "./auth.type";
-import { createUserApi, getUserApi } from "./auth.api";
+import {
+  createUserApi,
+  getUserApi,
+  getUsersApi,
+  updateUserApi,
+} from "./auth.api";
 
 export const useLogin = (email: string, password: string) => {
   const router = useRouter();
@@ -36,6 +41,25 @@ export const useSignUp = () => {
         payload: { ...data },
       });
       router.push(MainRoutes.HOME);
+    },
+  });
+};
+
+export const useGetUsers = () => {
+  return useQuery<UserDataType>({
+    queryKey: ["users"],
+    queryFn: () => getUsersApi(),
+  });
+};
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (newUser: UserDataType) => updateUserApi(newUser),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["users"],
+      });
     },
   });
 };
