@@ -7,7 +7,7 @@ export const getProductByCategoryApi = async (category: string) => {
 };
 
 export const createProductApi = async (product: ProductDataType) => {
-  const response = await api.post("/product", product);
+  const response = await api.post("/products", product);
   return response.data;
 };
 

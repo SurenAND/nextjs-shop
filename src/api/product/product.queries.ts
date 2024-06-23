@@ -13,6 +13,7 @@ export const useGetProducts = () => {
   return useQuery<ProductDataType>({
     queryKey: ["products"],
     queryFn: () => getProductListApi(),
+    refetchOnMount: "always",
   });
 };
 
@@ -35,9 +36,9 @@ export const useCreateProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (newProduct: ProductDataType) => createProductApi(newProduct),
-    onSuccess(data) {
+    onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ["products", "category", data.category],
+        queryKey: ["products"],
       });
     },
   });
@@ -47,12 +48,9 @@ export const useDeleteProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => deleteProductApi(id),
-    onSuccess(data) {
+    onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ["products", "category", data.category],
-      });
-      queryClient.removeQueries({
-        queryKey: ["products", "single", data.id],
+        queryKey: ["products"],
       });
     },
   });
