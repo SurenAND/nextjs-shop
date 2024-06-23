@@ -4,6 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PeopleIcon from "@mui/icons-material/People";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
 export const drawerProductsItems = [
   {
@@ -25,6 +26,14 @@ export const drawerProductsItems = [
     title: "Delete Product",
     view: "delete-product",
     icon: <DeleteIcon />,
+  },
+];
+
+export const drawerOrdersItems = [
+  {
+    title: "Orders",
+    view: "orders",
+    icon: <LocalShippingIcon />,
   },
 ];
 

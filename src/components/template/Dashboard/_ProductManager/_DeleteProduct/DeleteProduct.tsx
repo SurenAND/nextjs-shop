@@ -121,7 +121,7 @@ function DeleteProduct() {
               paginationModel: { page: 0, pageSize: 5 },
             },
           }}
-          pageSizeOptions={[5, 10, 15]}
+          // pageSizeOptions={[5, 10, 15]}
         />
       </Box>
     </Stack>

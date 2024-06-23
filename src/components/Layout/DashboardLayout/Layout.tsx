@@ -20,6 +20,8 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
             transition: `all ${open ? "225ms ease-out" : "195ms ease-in"}`,
             marginLeft: open ? 0 : "-250px",
             width: open ? `calc(100% - ${drawerWidth}px)` : "100%",
+            height: open ? `calc(100vh + ${drawerWidth - 100}px)` : "100%",
+            overflow: "hidden",
           }}
         >
           {children}

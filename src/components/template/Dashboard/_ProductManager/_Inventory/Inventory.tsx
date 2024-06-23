@@ -87,7 +87,7 @@ export default function Inventory() {
               paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          pageSizeOptions={[10, 25, 50]}
+          // pageSizeOptions={[10, 25, 50]}
         />
       </Box>
       <Button
