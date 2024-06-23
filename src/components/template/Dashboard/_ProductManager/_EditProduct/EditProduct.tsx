@@ -7,7 +7,12 @@ function EditProduct() {
   const [showForm, setShowForm] = useState(false);
   const [productId, setProductId] = useState("");
   return (
-    <Stack spacing={2}>
+    <Stack
+      spacing={2}
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+    >
       {showForm ? (
         <EditForm
           setShowForm={setShowForm}

@@ -4,6 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PeopleIcon from "@mui/icons-material/People";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
 export const drawerProductsItems = [
   {
@@ -28,16 +29,24 @@ export const drawerProductsItems = [
   },
 ];
 
+export const drawerOrdersItems = [
+  {
+    title: "Orders",
+    view: "orders",
+    icon: <LocalShippingIcon />,
+  },
+];
+
 export const drawerUserItems = [
   {
-    title: "Admin Settings",
-    view: "admin-settings",
+    title: "Admin Manager",
+    view: "admin-manager",
     icon: <AdminPanelSettingsIcon />,
     roleToSee: ["moderator"],
   },
   {
     title: "Users",
-    view: "users",
+    view: "users-manager",
     icon: <PeopleIcon />,
     roleToSee: ["admin", "moderator"],
   },

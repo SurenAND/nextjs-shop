@@ -99,7 +99,12 @@ function DeleteProduct() {
   const row = Array.isArray(data) ? data : []; // to fix type error
 
   return (
-    <Stack spacing={5} alignItems="center">
+    <Stack
+      spacing={5}
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+    >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
         Delete Product
       </Typography>
@@ -116,7 +121,7 @@ function DeleteProduct() {
               paginationModel: { page: 0, pageSize: 5 },
             },
           }}
-          pageSizeOptions={[5, 10, 15]}
+          // pageSizeOptions={[5, 10, 15]}
         />
       </Box>
     </Stack>

@@ -1,14 +1,11 @@
-import {
-  useGetProducts,
-  useUpdateProduct,
-} from "@/src/api/product/product.queries";
-import { ProductDataType } from "@/src/api/product/product.type";
+import { useGetUsers, useUpdateUser } from "@/src/api/auth/auth.queries";
+import { UserDataType } from "@/src/api/auth/auth.type";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 
-export default function Inventory() {
-  const columns: GridColDef<ProductDataType>[] = [
+export default function AdminsManager() {
+  const columns: GridColDef<UserDataType>[] = [
     {
       field: "id",
       headerName: "ID",
@@ -20,39 +17,45 @@ export default function Inventory() {
       resizable: false,
     },
     {
-      field: "name",
-      headerName: "Product Name",
+      field: "userName",
+      headerName: "User Name",
       width: 200,
-      resizable: false,
-    },
-    {
-      field: "qty",
-      headerName: "Quantity",
-      type: "number",
-      width: 150,
-      align: "left",
-      headerAlign: "left",
       editable: true,
       resizable: false,
     },
     {
-      field: "price",
-      headerName: "Price",
-      type: "number",
-      width: 150,
-      align: "left",
-      headerAlign: "left",
+      field: "email",
+      headerName: "Email",
+      width: 200,
       editable: true,
       resizable: false,
+    },
+    {
+      field: "password",
+      headerName: "Password",
+      width: 200,
+      editable: true,
+      resizable: false,
+    },
+    {
+      field: "role",
+      headerName: "Role",
+      width: 200,
+      editable: true,
+      resizable: false,
+      type: "singleSelect",
+      valueOptions: ["moderator", "admin", "user"],
     },
   ];
-  const { data } = useGetProducts();
-  const { mutate } = useUpdateProduct();
+  const { data } = useGetUsers();
+  const { mutate } = useUpdateUser();
 
-  const row = Array.isArray(data) ? data : [];
-  const [updatedData, setUpdatedData] = useState<ProductDataType[]>([]);
+  const row = Array.isArray(data)
+    ? data.filter((item) => item.role === "admin" || item.role === "moderator")
+    : [];
+  const [updatedData, setUpdatedData] = useState<UserDataType[]>([]);
 
-  const handleUpdateNewValue = (row: ProductDataType) => {
+  const handleUpdateNewValue = (row: UserDataType) => {
     const temp = [...updatedData];
     const foundedIndex = temp.findIndex((item) => item.id === row.id);
     if (foundedIndex > -1) {
@@ -66,9 +69,14 @@ export default function Inventory() {
   };
 
   return (
-    <Stack spacing={5} alignItems="center">
+    <Stack
+      spacing={5}
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+    >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
-        Product Inventory
+        Admin Manager
       </Typography>
       <Box sx={{ height: "50%", width: "100%" }}>
         <DataGrid

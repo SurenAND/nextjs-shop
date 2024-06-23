@@ -9,7 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import { drawerProductsItems, drawerUserItems } from "./data";
+import {
+  drawerOrdersItems,
+  drawerProductsItems,
+  drawerUserItems,
+} from "./data";
 import { useRouter } from "next/router";
 import { MainRoutes } from "@/src/constant/routes";
 import { useSearchParams } from "next/navigation";
@@ -94,6 +98,40 @@ export default function DrawerList() {
       </List>
       <List>
         <Typography variant="h6" fontWeight={600}>
+          Orders Management
+        </Typography>
+        {drawerOrdersItems.map((item, index) => (
+          <ListItem
+            key={index}
+            sx={{
+              color: searchParams === item.view ? "#5e35b0" : "",
+              backgroundColor: searchParams === item.view ? "#ece6f5" : "",
+              borderRadius: "20px",
+              margin: "10px 0",
+              textWrap: "nowrap",
+            }}
+          >
+            <ListItemButton
+              onClick={() =>
+                pushRouter(`${MainRoutes.DASHBOARD}?view=${item.view}`)
+              }
+              sx={{ borderRadius: "20px" }}
+              disableRipple
+            >
+              <ListItemIcon
+                sx={{
+                  color: searchParams === item.view ? "#5e35b0" : "",
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.title} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <List>
+        <Typography variant="h6" fontWeight={600}>
           User Management
         </Typography>
         {drawerUserItems.map((item, index) => (
@@ -127,7 +165,7 @@ export default function DrawerList() {
           </ListItem>
         ))}
       </List>
-      <List sx={{ position: "absolute", bottom: "0" }}>
+      <List>
         <Divider />
         <Typography
           margin="15px auto"
