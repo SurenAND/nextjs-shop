@@ -8,11 +8,13 @@ import Inventory from "./_ProductManager/_Inventory/Inventory";
 import UsersManager from "./_UserManager/_Users/Users";
 import AdminsManager from "./_UserManager/_Admins/Admins";
 
+
 function DashboardTemplate() {
   const searchParams = useSearchParams().get("view");
   const { state } = useUserContext();
   return (
     <Box display="flex" justifyContent="center" alignItems="center" my={3}>
+
       {searchParams === "inventory" && <Inventory />}
       {searchParams === "add-product" && <AddProduct />}
       {searchParams === "edit-product" && <EditProduct />}

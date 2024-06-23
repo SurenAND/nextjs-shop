@@ -20,3 +20,4 @@ export const updateUserApi = async (user: UserDataType) => {
   const response = await api.put(`/users/${user.id}`, user);
   return response.data;
 };
+
