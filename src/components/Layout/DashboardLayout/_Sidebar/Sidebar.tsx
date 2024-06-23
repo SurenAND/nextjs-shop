@@ -14,6 +14,7 @@ export default function Sidebar({
     <Drawer
       sx={{
         width: drawerWidth,
+        height: "auto",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           top: "88px",
@@ -21,6 +22,7 @@ export default function Sidebar({
           width: drawerWidth,
           boxSizing: "border-box",
           borderRight: "none",
+          height: "auto",
         },
       }}
       variant="persistent"
