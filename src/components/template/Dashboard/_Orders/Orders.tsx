@@ -1,14 +1,19 @@
 import {
-  useGetProducts,
-  useUpdateProduct,
-} from "@/src/api/product/product.queries";
-import { ProductDataType } from "@/src/api/product/product.type";
-import { Box, Button, Stack, Typography } from "@mui/material";
+  Box,
+  Button,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
+import { useGetOrders, useUpdateOrder } from "@/src/api/orders/orders.queries";
+import { OrderDataType } from "@/src/api/orders/orders.type";
+import { removeHyphens } from "@/src/lib/helper";
 
-export default function Inventory() {
-  const columns: GridColDef<ProductDataType>[] = [
+export default function Orders() {
+  const columns: GridColDef<OrderDataType>[] = [
     {
       field: "id",
       headerName: "ID",
@@ -32,27 +37,74 @@ export default function Inventory() {
       width: 150,
       align: "left",
       headerAlign: "left",
-      editable: true,
       resizable: false,
     },
     {
       field: "price",
       headerName: "Price",
       type: "number",
-      width: 150,
+      width: 110,
       align: "left",
       headerAlign: "left",
-      editable: true,
       resizable: false,
     },
+    {
+      field: "shipment",
+      headerName: "Shipment",
+      type: "string",
+      width: 150,
+      resizable: false,
+      renderCell: (params) => {
+        return (
+          <Stack justifyContent="center" alignItems="center" height="100%">
+            <Typography sx={{ textTransform: "capitalize" }}>
+              {removeHyphens(params.value)}
+            </Typography>
+          </Stack>
+        );
+      },
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      type: "singleSelect",
+      valueOptions: ["inprogress", "completed", "cancelled"],
+      width: 200,
+      editable: true,
+      resizable: false,
+      renderCell: (params) => {
+        return (
+          <Stack
+            sx={{
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+              fontWeight: "500",
+              borderRadius: 10,
+              margin: "10px",
+              textTransform: "uppercase",
+              height: "50px",
+              bgcolor:
+                params.value === "inprogress"
+                  ? "purple"
+                  : params.value === "completed"
+                  ? "green"
+                  : "red",
+            }}
+          >
+            {params.value}
+          </Stack>
+        );
+      },
+    },
   ];
-  const { data } = useGetProducts();
-  const { mutate } = useUpdateProduct();
+  const { data } = useGetOrders();
+  const { mutate } = useUpdateOrder();
 
   const row = Array.isArray(data) ? data : [];
-  const [updatedData, setUpdatedData] = useState<ProductDataType[]>([]);
+  const [updatedData, setUpdatedData] = useState<OrderDataType[]>([]);
 
-  const handleUpdateNewValue = (row: ProductDataType) => {
+  const handleUpdateNewValue = (row: OrderDataType) => {
     const temp = [...updatedData];
     const foundedIndex = temp.findIndex((item) => item.id === row.id);
     if (foundedIndex > -1) {
@@ -74,7 +126,7 @@ export default function Inventory() {
       sx={{ userSelect: "none" }}
     >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
-        Product Inventory
+        Orders
       </Typography>
       <Box sx={{ height: "50%", width: "100%" }}>
         <DataGrid
@@ -84,6 +136,7 @@ export default function Inventory() {
           showColumnVerticalBorder
           rows={row}
           columns={columns}
+          rowHeight={70}
           processRowUpdate={(updatedData) => {
             handleUpdateNewValue(updatedData);
             return updatedData;
@@ -93,7 +146,6 @@ export default function Inventory() {
               paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          // pageSizeOptions={[10, 25, 50]}
         />
       </Box>
       <Button

@@ -7,6 +7,7 @@ import DeleteProduct from "./_ProductManager/_DeleteProduct/DeleteProduct";
 import Inventory from "./_ProductManager/_Inventory/Inventory";
 import UsersManager from "./_UserManager/_Users/Users";
 import AdminsManager from "./_UserManager/_Admins/Admins";
+import Orders from "./_Orders/Orders";
 
 function DashboardTemplate() {
   const searchParams = useSearchParams().get("view");
@@ -19,6 +20,7 @@ function DashboardTemplate() {
       {searchParams === "delete-product" && <DeleteProduct />}
       {searchParams === "users-manager" && <UsersManager />}
       {searchParams === "admin-manager" && <AdminsManager />}
+      {searchParams === "orders" && <Orders />}
 
       {!searchParams && (
         <Stack
