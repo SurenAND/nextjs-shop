@@ -1,9 +1,10 @@
-export type ProductDataType = {
+export type CartDataType = {
   id: string;
   name: string;
   price: number;
   category: string;
   image: string;
   description: string;
-  qty:number
+  qty: number;
+  userId: string;
 };

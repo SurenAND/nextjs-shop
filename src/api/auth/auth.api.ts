@@ -1,5 +1,5 @@
-import api from "../config.api";
-import { UserDataType } from "./auth.type";
+import api from '../config.api';
+import { UserDataType } from './auth.type';
 
 export const getUserApi = async (email: string, password: string) => {
   const response = await api.get(`/users?email=${email}&password=${password}`);
@@ -7,12 +7,12 @@ export const getUserApi = async (email: string, password: string) => {
 };
 
 export const createUserApi = async (user: UserDataType) => {
-  const response = await api.post("/users", user);
+  const response = await api.post('/users', user);
   return response.data;
 };
 
 export const getUsersApi = async () => {
-  const response = await api.get("/users");
+  const response = await api.get('/users');
   return response.data;
 };
 
@@ -21,3 +21,7 @@ export const updateUserApi = async (user: UserDataType) => {
   return response.data;
 };
 
+export const getUserByIdApi = async (id: string) => {
+  const response = await api.get(`/users/${id}`);
+  return response.data;
+};
