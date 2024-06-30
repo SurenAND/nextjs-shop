@@ -25,4 +25,3 @@ export type OrderDataType = {
   cartItems: cartItemType[];
   totalPrice: ()=>number;
 };
-

@@ -7,6 +7,7 @@ import DeleteProduct from "./_ProductManager/_DeleteProduct/DeleteProduct";
 import Inventory from "./_ProductManager/_Inventory/Inventory";
 import UsersManager from "./_UserManager/_Users/Users";
 import AdminsManager from "./_UserManager/_Admins/Admins";
+import Orders from "./_Orders/Orders";
 
 
 function DashboardTemplate() {
@@ -14,13 +15,13 @@ function DashboardTemplate() {
   const { state } = useUserContext();
   return (
     <Box display="flex" justifyContent="center" alignItems="center" my={3}>
-
       {searchParams === "inventory" && <Inventory />}
       {searchParams === "add-product" && <AddProduct />}
       {searchParams === "edit-product" && <EditProduct />}
       {searchParams === "delete-product" && <DeleteProduct />}
       {searchParams === "users-manager" && <UsersManager />}
       {searchParams === "admin-manager" && <AdminsManager />}
+      {searchParams === "orders" && <Orders />}
 
       {!searchParams && (
         <Stack

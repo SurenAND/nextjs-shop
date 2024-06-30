@@ -5,7 +5,7 @@ import { OrderDataType } from './orders.type';
 
 export const useGetOrders = () => {
   return useQuery<OrderDataType>({
-    queryKey: ['orders'],
+    queryKey: ["orders"],
     queryFn: () => getOrdersApi(),
     refetchOnMount: true,
   });

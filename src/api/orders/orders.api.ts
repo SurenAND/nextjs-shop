@@ -11,9 +11,8 @@ export const updateOrderApi = async (order: OrderDataType) => {
   return response.data;
 };
 
-
-
 export const addOrderApi = async (orders:OrderDataType) => {
   const response = await api.post("/orders", orders);
   return response.data;
 };
+

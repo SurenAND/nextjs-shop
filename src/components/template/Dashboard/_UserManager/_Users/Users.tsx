@@ -1,7 +1,12 @@
-import { useGetUsers, useUpdateUser } from "@/src/api/auth/auth.queries";
+import {
+  useDeleteUser,
+  useGetUsers,
+  useUpdateUser,
+} from "@/src/api/auth/auth.queries";
 import { UserDataType } from "@/src/api/auth/auth.type";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 
 export default function UsersManager() {
@@ -37,6 +42,33 @@ export default function UsersManager() {
       editable: true,
       resizable: false,
     },
+    {
+      field: "actions",
+      headerName: "Delete",
+      width: 150,
+      align: "center",
+      disableColumnMenu: true,
+      renderCell: (params) => {
+        const { mutate: deleteUser } = useDeleteUser();
+        const onButtonClick = (row: UserDataType) => {
+          deleteUser(String(row.id));
+        };
+        return (
+          <IconButton
+            sx={{
+              bgcolor: "#ece6f5",
+              borderRadius: "8px",
+              transition: "all .2s ease-in-out",
+              color: "#5e35b0",
+              "&:hover": { bgcolor: "#4527a1", color: "#fff" },
+            }}
+            onClick={() => onButtonClick(params.row)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        );
+      },
+    },
   ];
   const { data } = useGetUsers();
   const { mutate } = useUpdateUser();
@@ -65,6 +97,7 @@ export default function UsersManager() {
       alignItems="center"
       justifyContent="center"
       height="100vh"
+      sx={{ userSelect: "none" }}
     >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
         User Manager
@@ -86,7 +119,6 @@ export default function UsersManager() {
               paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          // pageSizeOptions={[10, 25, 50]}
         />
       </Box>
       <Button

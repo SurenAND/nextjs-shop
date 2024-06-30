@@ -4,11 +4,11 @@ import { generate_token } from '@/src/lib/helper';
 import { AuthReducerAction } from '@/src/types/enums';
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
-
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { UserDataType } from './auth.type';
 import {
   createUserApi,
+  deleteUserApi,
   getUserApi,
   getUserByIdApi,
   getUsersApi,
@@ -51,6 +51,7 @@ export const useGetUsers = () => {
   return useQuery<UserDataType>({
     queryKey: ['users'],
     queryFn: () => getUsersApi(),
+    refetchOnMount: true,
   });
 };
 
@@ -71,5 +72,17 @@ export const useGetUserById = (id: string) => {
     queryKey: ['users', 'single', id],
     queryFn: () => getUserByIdApi(id),
     refetchOnMount: true,
+  });
+};
+
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteUserApi(id),
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ["users"],
+      });
+    },
   });
 };
