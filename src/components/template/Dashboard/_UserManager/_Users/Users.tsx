@@ -1,14 +1,16 @@
 import {
-  useGetProducts,
-  useUpdateProduct,
-} from "@/src/api/product/product.queries";
-import { ProductDataType } from "@/src/api/product/product.type";
-import { Box, Button, Stack, Typography } from "@mui/material";
+  useDeleteUser,
+  useGetUsers,
+  useUpdateUser,
+} from "@/src/api/auth/auth.queries";
+import { UserDataType } from "@/src/api/auth/auth.type";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 
-export default function Inventory() {
-  const columns: GridColDef<ProductDataType>[] = [
+export default function UsersManager() {
+  const columns: GridColDef<UserDataType>[] = [
     {
       field: "id",
       headerName: "ID",
@@ -20,39 +22,63 @@ export default function Inventory() {
       resizable: false,
     },
     {
-      field: "name",
-      headerName: "Product Name",
+      field: "userName",
+      headerName: "User Name",
       width: 200,
-      resizable: false,
-    },
-    {
-      field: "qty",
-      headerName: "Quantity",
-      type: "number",
-      width: 150,
-      align: "left",
-      headerAlign: "left",
       editable: true,
       resizable: false,
     },
     {
-      field: "price",
-      headerName: "Price",
-      type: "number",
-      width: 150,
-      align: "left",
-      headerAlign: "left",
+      field: "email",
+      headerName: "Email",
+      width: 200,
       editable: true,
       resizable: false,
+    },
+    {
+      field: "password",
+      headerName: "Password",
+      width: 200,
+      editable: true,
+      resizable: false,
+    },
+    {
+      field: "actions",
+      headerName: "Delete",
+      width: 150,
+      align: "center",
+      disableColumnMenu: true,
+      renderCell: (params) => {
+        const { mutate: deleteUser } = useDeleteUser();
+        const onButtonClick = (row: UserDataType) => {
+          deleteUser(String(row.id));
+        };
+        return (
+          <IconButton
+            sx={{
+              bgcolor: "#ece6f5",
+              borderRadius: "8px",
+              transition: "all .2s ease-in-out",
+              color: "#5e35b0",
+              "&:hover": { bgcolor: "#4527a1", color: "#fff" },
+            }}
+            onClick={() => onButtonClick(params.row)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        );
+      },
     },
   ];
-  const { data } = useGetProducts();
-  const { mutate } = useUpdateProduct();
+  const { data } = useGetUsers();
+  const { mutate } = useUpdateUser();
 
-  const row = Array.isArray(data) ? data : [];
-  const [updatedData, setUpdatedData] = useState<ProductDataType[]>([]);
+  const row = Array.isArray(data)
+    ? data.filter((item) => item.role !== "admin" && item.role !== "moderator")
+    : [];
+  const [updatedData, setUpdatedData] = useState<UserDataType[]>([]);
 
-  const handleUpdateNewValue = (row: ProductDataType) => {
+  const handleUpdateNewValue = (row: UserDataType) => {
     const temp = [...updatedData];
     const foundedIndex = temp.findIndex((item) => item.id === row.id);
     if (foundedIndex > -1) {
@@ -74,7 +100,7 @@ export default function Inventory() {
       sx={{ userSelect: "none" }}
     >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
-        Product Inventory
+        User Manager
       </Typography>
       <Box sx={{ height: "50%", width: "100%" }}>
         <DataGrid

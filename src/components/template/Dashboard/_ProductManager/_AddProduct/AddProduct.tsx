@@ -42,7 +42,13 @@ function AddProduct() {
   }
 
   return (
-    <Stack spacing={5} alignItems="center">
+    <Stack
+      spacing={5}
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+      sx={{ userSelect: "none" }}
+    >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
         Add Product
       </Typography>

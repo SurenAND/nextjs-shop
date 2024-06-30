@@ -7,7 +7,13 @@ function EditProduct() {
   const [showForm, setShowForm] = useState(false);
   const [productId, setProductId] = useState("");
   return (
-    <Stack spacing={2}>
+    <Stack
+      spacing={5}
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+      sx={{ userSelect: "none" }}
+    >
       {showForm ? (
         <EditForm
           setShowForm={setShowForm}
