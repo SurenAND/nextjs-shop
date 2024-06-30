@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { ProductDataType } from "./product.type";
+import { ProductDataType } from "@/src/api/product/product.type";
 import {
   createProductApi,
   deleteProductApi,
@@ -7,7 +7,7 @@ import {
   getProductByIdApi,
   getProductListApi,
   updateProductApi,
-} from "./product.api";
+} from "@/src/api/product/product.api";
 
 export const useGetProducts = () => {
   return useQuery<ProductDataType>({

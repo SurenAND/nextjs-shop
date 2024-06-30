@@ -13,7 +13,7 @@ import {
   drawerOrdersItems,
   drawerProductsItems,
   drawerUserItems,
-} from "./data";
+} from "@/src/components/Layout/DashboardLayout/_Sidebar/_DrawerList/data";
 import { useRouter } from "next/router";
 import { MainRoutes } from "@/src/constant/routes";
 import { useSearchParams } from "next/navigation";

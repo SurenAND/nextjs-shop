@@ -1,5 +1,5 @@
-import api from "../config.api";
-import { ProductDataType } from "./product.type";
+import api from "@/src/api/config.api";
+import { ProductDataType } from "@/src/api/product/product.type";
 
 export const getProductByCategoryApi = async (category: string) => {
   const response = await api.get(`/products?category=${category}`);

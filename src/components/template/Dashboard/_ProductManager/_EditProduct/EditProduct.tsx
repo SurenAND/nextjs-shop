@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
-import EditForm from "./_EditForm/EditForm";
-import ProductsTable from "./_ProductsTable/ProductsTable";
+import EditForm from "@/src/components/template/Dashboard/_ProductManager/_EditProduct/_EditForm/EditForm";
+import ProductsTable from "@/src/components/template/Dashboard/_ProductManager/_EditProduct/_ProductsTable/ProductsTable";
 import { useState } from "react";
 
 function EditProduct() {

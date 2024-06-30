@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect } from "react";
-import Header from "./_Header/Header";
-import Footer from "./_Footer/Footer";
+import Header from "@/src/components/Layout/MainLayout/_Header/Header";
+import Footer from "@/src/components/Layout/MainLayout/_Footer/Footer";
 import { useUserContext } from "@/src/context/authContext";
 import { Box } from "@mui/material";
 

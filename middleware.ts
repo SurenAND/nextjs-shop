@@ -20,9 +20,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
+  // Redirect to home if trying to access profile page and token exists
+  if (pathname.startsWith("/profile") && !token) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/register", "/dashboard"],
+  matcher: ["/register", "/dashboard", "/profile"],
 };
