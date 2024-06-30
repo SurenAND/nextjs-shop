@@ -22,6 +22,7 @@ export const useGetProductById = (productId: string) => {
     queryKey: ["products", "single", productId],
     queryFn: () => getProductByIdApi(productId),
     refetchOnMount: "always",
+    enabled: !!productId,
   });
 };
 

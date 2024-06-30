@@ -2,12 +2,13 @@ import { MainRoutes } from "@/src/constant/routes";
 import { useUserContext } from "@/src/context/authContext";
 import { AuthReducerAction } from "@/src/types/enums";
 import { useRouter } from "next/router";
-
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { UserDataType } from "@/src/api/auth/auth.type";
 import {
   createUserApi,
+  deleteUserApi,
   getUserApi,
+  getUserByIdApi,
   getUsersApi,
   updateUserApi,
 } from "@/src/api/auth/auth.api";
@@ -48,6 +49,7 @@ export const useGetUsers = () => {
   return useQuery<UserDataType>({
     queryKey: ["users"],
     queryFn: () => getUsersApi(),
+    refetchOnMount: true,
   });
 };
 
@@ -56,6 +58,26 @@ export const useUpdateUser = () => {
   return useMutation({
     mutationFn: (newUser: UserDataType) => updateUserApi(newUser),
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["users"],
+      });
+    },
+  });
+};
+
+export const useGetUserById = (id: string) => {
+  return useQuery<UserDataType>({
+    queryKey: ["users", "single", id],
+    queryFn: () => getUserByIdApi(id),
+    refetchOnMount: true,
+  });
+};
+
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteUserApi(id),
+    onSuccess() {
       queryClient.invalidateQueries({
         queryKey: ["users"],
       });

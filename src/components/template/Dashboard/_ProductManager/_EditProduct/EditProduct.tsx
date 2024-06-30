@@ -8,10 +8,11 @@ function EditProduct() {
   const [productId, setProductId] = useState("");
   return (
     <Stack
-      spacing={2}
+      spacing={5}
       alignItems="center"
       justifyContent="center"
       height="100vh"
+      sx={{ userSelect: "none" }}
     >
       {showForm ? (
         <EditForm

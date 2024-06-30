@@ -1,12 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import CardComp from "@/src/components/shared/Card/Card";
 import { useGetProductByCategory } from "@/src/api/product/product.queries";
+import { removeHyphens } from "@/src/lib/helper";
 
 const CategoriesTemplate = ({ category }: any) => {
-  const removeHyphens = (str: string): string => {
-    return str?.replace(/-/g, " ");
-  };
-
   const { data, isLoading, isError } = useGetProductByCategory(category);
 
   return (
