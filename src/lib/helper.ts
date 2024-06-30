@@ -17,3 +17,7 @@ export function stringAvatar(name: string) {
     children: `${name.split(" ")[0][0]}`,
   };
 }
+
+export const removeHyphens = (str: string): string => {
+  return str?.replace(/-/g, " ");
+};

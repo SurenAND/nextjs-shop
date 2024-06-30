@@ -47,6 +47,7 @@ function AddProduct() {
       alignItems="center"
       justifyContent="center"
       height="100vh"
+      sx={{ userSelect: "none" }}
     >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
         Add Product
