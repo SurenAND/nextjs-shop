@@ -4,16 +4,18 @@ export interface ShoppingCartItem {
   productImage: string;
   productPrice: number;
   productQty: number;
-  qty:number
+  qty: number;
 }
 
 export interface PersonalInfo {
-  userId: string|undefined;
+  userId: string | undefined;
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: number|string;
+  phoneNumber: number | string;
   address: string;
+  date: string;
+  orderNumber: string;
 }
 
 export interface ShippingInfo {

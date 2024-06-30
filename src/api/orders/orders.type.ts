@@ -1,12 +1,28 @@
-export type OrderDataType = {
+type cartItemType = {
   id: string;
-  name: string;
-  price: number;
+  productImage: string;
+  productName: string;
+  productPrice: number;
+  productQty: number;
+  productTotalPrice: number;
   qty: number;
-  userId: string;
-  status: string;
-  description: string;
-  category: string;
-  shipment: string;
-  image: string;
 };
+
+export type OrderDataType = {
+  id:string
+  userId: string;
+  orderNumber: string;
+  date: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  address: string;
+  shippingName: string;
+  shippingDescription: string;
+  price: number;
+  paymentName: string;
+  paymentDescription: string;
+  cartItems: cartItemType[];
+  totalPrice: ()=>number;
+};
+

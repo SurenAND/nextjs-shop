@@ -8,37 +8,51 @@ import {
   ShoppingCartItem,
 } from '@/components/template/Cart/store/type.store';
 
+
+const initialState: CheckoutState = {
+  activeStep: 0,
+  shoppingCartInfo: [],
+  personalInfo: {
+    userId: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: 0,
+    address: '',
+    date: new Date().toISOString(),
+    orderNumber:''
+  },
+  shippingInfo: {
+    priceSelected: 0,
+    selected: 0,
+    shippingTitle: '',
+    shippingDescription: '',
+  },
+  paymentOptionsInfo: {
+    selected: 0,
+    paymentOptionTitle: '',
+    paymentOptionDescription: '',
+  },
+  setActiveStep: () => {},
+  setShoppingCartInfo: () => {},
+  setPersonalInfo: () => {},
+  setShippingInfo: () => {},
+  setPaymentOptionsInfo: () => {},
+  reset: () => {},
+};
+
 const useCheckoutStore = create<CheckoutState>()(
   persist(
     (set) => ({
-      activeStep: 0,
+      ...initialState,
       setActiveStep: (activeStep: number) => set({ activeStep }),
-      shoppingCartInfo: [],
       setShoppingCartInfo: (info: ShoppingCartItem[]) =>
         set({ shoppingCartInfo: info }),
-      personalInfo: {
-        userId: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: 0,
-        address: '',
-      },
       setPersonalInfo: (info: PersonalInfo) => set({ personalInfo: info }),
-      shippingInfo: {
-        priceSelected: 0,
-        selected: 0,
-        shippingTitle: '',
-        shippingDescription: '',
-      },
       setShippingInfo: (info: ShippingInfo) => set({ shippingInfo: info }),
-      paymentOptionsInfo: {
-        selected: 0,
-        paymentOptionTitle: '',
-        paymentOptionDescription: '',
-      },
       setPaymentOptionsInfo: (info: PaymentOptionsInfo) =>
         set({ paymentOptionsInfo: info }),
+      reset: () => set({ ...initialState }),  // متد ریست وضعیت
     }),
     { name: 'checkout-storage' }
   )

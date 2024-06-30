@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -23,16 +24,39 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import PaymentIcon from '@mui/icons-material/Payment';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import { useAddOrder } from '@/src/api/orders/orders.queries';
-import { generate_token } from '@/src/lib/helper';
 import {
   useGetProductById,
   useUpdateProduct,
 } from '@/src/api/product/product.queries';
+import { useGetCartById } from '@/src/api/cart/cart.queries';
+import { useUserContext } from '@/src/context/authContext';
 import { useEffect, useState } from 'react';
-
+import api from '@/src/api/config.api';
+import { OrderDataType } from '@/src/api/orders/orders.type';
+import { generate_token } from '@/src/lib/helper';
+import { getProductByIdApi } from '@/src/api/product/product.api';
 const ReviewOrderTemplate = () => {
   const { mutate: addOrder } = useAddOrder();
   const { mutate: updateProduct } = useUpdateProduct();
+
+  const { state } = useUserContext();
+  const userId = state.userId;
+  const { data: dataCart } = useGetCartById(userId);
+  const [cartItems, setCartItems] = useState(dataCart)
+  const { data,  } = useGetCartById(state.userId);
+
+  const [productId, setProductId] = useState('');
+
+
+  useEffect(() => {
+
+
+
+    if (dataCart) {
+      setCartItems(dataCart);
+    }
+  }, [dataCart]);
+
   const {
     activeStep,
     setActiveStep,
@@ -41,25 +65,6 @@ const ReviewOrderTemplate = () => {
     shippingInfo,
     shoppingCartInfo,
   } = useCheckoutStore();
-  // const [productId, setProductId] = useState('');
-  // const {
-  //   data: productData,
-  //   isLoading,
-  //   refetch,
-  // } = useGetProductById(productId);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchPromises = shoppingCartInfo?.map(async (product) => {
-        await refetch();
-        setProductId(product.id);
-      });
-
-      await Promise.all(fetchPromises);
-    };
-
-    fetchData();
-  }, [shoppingCartInfo, refetch]);
 
   const specifications = {
     firstName: personalInfo.firstName,
@@ -80,6 +85,7 @@ const ReviewOrderTemplate = () => {
     name: paymentOptionsInfo.paymentOptionTitle,
     description: paymentOptionsInfo.paymentOptionDescription,
   };
+
   const getTotalPrice = () => {
     return (
       shoppingCartInfo.reduce(
@@ -89,13 +95,24 @@ const ReviewOrderTemplate = () => {
     );
   };
 
+
+
+  
+
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const handOrder = () => {
-    const orderData = {
+
+  const handOrder = async () => {
+    const updateProductThenOrder = shoppingCartInfo.map((product: any) => {
+      return { ...product, qty: product.qty - product.productQty };
+    });
+
+    const orderData: OrderDataType = {
+      id: generate_token(5),
       userId: personalInfo.userId,
-      orderNumber: generate_token(5),
+      orderNumber: personalInfo.orderNumber,
+      date: personalInfo.date,
       firstName: personalInfo.firstName,
       lastName: personalInfo.lastName,
       phoneNumber: personalInfo.phoneNumber,
@@ -105,22 +122,50 @@ const ReviewOrderTemplate = () => {
       price: shippingInfo.priceSelected,
       paymentName: paymentOptionsInfo.paymentOptionTitle,
       paymentDescription: paymentOptionsInfo.paymentOptionDescription,
-      cartItems: shoppingCartInfo,
+      cartItems: updateProductThenOrder,
       totalPrice: getTotalPrice(),
-      date: new Date().toISOString(),
     };
 
-   
-
-    // updateProduct({ ...product, qty: product.qty - product.productQty });
 
 
-    shoppingCartInfo.map((product)=>{
 
-      console.log({ ...productData, qty: product.qty - product.productQty });
-    })
+    if (data) {
+      const fetchPromises = data.map(async (product) => {
+        return product.productId;
+      });
+      const productIds = await Promise.all(fetchPromises);
+      const promises = productIds.map((productId) =>
+        getProductByIdApi(productId.toString())
+      );
+      const results = await Promise.all(promises);
+      results.forEach((product) => {
+        const cartItem = shoppingCartInfo.find(item => item.id === product.id);
+
+        if (cartItem) {
+          updateProduct({ ...product, qty: product.qty - cartItem.productQty });
+        }
+      });
+    }
+
+
+
+
     addOrder(orderData);
 
+    ///delete product in cart
+    if (!cartItems) {
+      console.error('No cart items available');
+      return;
+    }
+
+    try {
+      const deleteRequests = cartItems.map((item) =>
+        api.delete(`/cart/${item.id}`)
+      );
+      await Promise.all(deleteRequests);
+    } catch (error) {
+      console.error('Error deleting all cart items:', error);
+    }
     setActiveStep(activeStep + 1);
   };
 
@@ -319,6 +364,7 @@ const ReviewOrderTemplate = () => {
             ? 'Invoice '
             : nextButtonLabels[activeStep]}
         </Button>
+
       </Box>
     </Box>
   );

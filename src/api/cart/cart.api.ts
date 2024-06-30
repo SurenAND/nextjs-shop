@@ -15,3 +15,8 @@ export const updateCartApi = async (productInCart: CartDataType) => {
   const response = await api.put(`/cart/${productInCart.id}`, productInCart);
   return response.data;
 };
+
+export const clearUserCartApi = async (userId:string) => {
+  const response = await api.delete(`/cart?userId=${userId}`);
+  return response.data;
+};

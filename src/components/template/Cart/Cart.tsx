@@ -3,13 +3,7 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-
 import ShoppingCartTemplate from './ShoppingCartTemplate/ShoppingCartTemplate';
 import SpecificationsTemplate from './SpecificationsTemplate/SpecificationsTemplate';
 import ShippingTemplate from './ShippingTemplate/ShippingTemplate';
@@ -35,15 +29,14 @@ export const nextButtonLabels = [
 ];
 
 function CartTemplate() {
+    
   const { activeStep, setActiveStep } = useCheckoutStore();
 
-  const [skipped, setSkipped] = useState(new Set<number>());
+  const [skipped] = useState(new Set<number>());
 
   const isStepSkipped = (activeStep: number) => {
     return skipped.has(activeStep);
   };
-
-  const handleNext = () => {};
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -76,29 +69,6 @@ function CartTemplate() {
         <ReviewOrderTemplate />
       ) : (
         <OrderDetails />
-      )}
-      {activeStep === steps.length && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            pt: 2,
-            pl: 4,
-            pr: 4,
-            justifyContent: 'end',
-            alignItems: 'center',
-          }}
-        >
-          <Button
-            endIcon={<ArrowForwardIosIcon />}
-            variant="contained"
-            onClick={handleNext}
-          >
-            {activeStep === steps.length
-              ? 'Go To Shop'
-              : nextButtonLabels[activeStep]}
-          </Button>
-        </Box>
       )}
     </Box>
   );

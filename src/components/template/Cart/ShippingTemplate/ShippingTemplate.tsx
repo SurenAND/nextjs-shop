@@ -17,7 +17,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { nextButtonLabels, steps } from '../Cart';
 import { useState, useEffect } from 'react';
-import { ReactNode } from 'react';
+
 const shippingOptions = [
   {
     id: 1,
@@ -98,8 +98,7 @@ const ShippingTemplate: React.FC = () => {
       selected: selectedOption,
       priceSelected: shippingPrice,
       shippingTitle: shippingTitle,
-      shippingDescription: shippingDescription,
-      shippingIcon: shippingIcon,
+      shippingDescription: shippingDescription
     });
   }, [
     selectedOption,
@@ -109,7 +108,6 @@ const ShippingTemplate: React.FC = () => {
     shippingIcon,
     setShippingInfo,
   ]);
-
   const handleSelect = (id: number) => {
     setSelectedOption(id);
     const selectedShippingOption = shippingOptions.find(

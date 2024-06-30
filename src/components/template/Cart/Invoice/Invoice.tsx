@@ -1,4 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import useCheckoutStore from '../store/usecheckoutStore';
+import { nextButtonLabels, steps } from '../Cart';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
   Card,
   CardContent,
@@ -15,7 +20,7 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useGetOrders } from '@/src/api/orders/orders.queries';
-
+import { useReactToPrint } from 'react-to-print';
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: '20px',
@@ -42,27 +47,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const OrderDetails = () => {
-  const { data, isLoading, error } = useGetOrders();
+  const { reset } = useCheckoutStore();
+  const componentRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+  const { activeStep ,shoppingCartInfo,personalInfo,paymentOptionsInfo,shippingInfo} = useCheckoutStore();
   const classes = useStyles();
-
-  if (isLoading) {
-    return <Typography>Loading...</Typography>;
-  }
-
-  if (error) {
-    return <Typography>Error fetching order details</Typography>;
-  }
-
-  if (!data || !data.length) {
-    return <Typography>No order data available</Typography>;
-  }
-
-  const orderData = data[0]; 
-
-
+  const handleReset = () => {
+    reset();
+  };
   return (
     <Card className={classes.card}>
-      <CardContent>
+      <CardContent ref={componentRef}>
         <Typography variant="h4" component="div" className={classes.title}>
           Order Details
         </Typography>
@@ -70,43 +67,45 @@ const OrderDetails = () => {
           <Grid item xs={6}>
             <Typography variant="h6">Personal Information</Typography>
             <Typography variant="body1">
-              <strong>Order ID:</strong> {orderData.orderNumber}
+              <strong>Order ID:</strong> {personalInfo.orderNumber}
             </Typography>
             <Typography variant="body1">
-              <strong>First Name:</strong> {orderData.firstName}
+              <strong>First Name:</strong> {personalInfo.firstName}
             </Typography>
             <Typography variant="body1">
-              <strong>Last Name:</strong> {orderData.lastName}
+              <strong>Last Name:</strong> {personalInfo.lastName}
             </Typography>
             <Typography variant="body1">
-              <strong>Phone Number:</strong> {orderData.phoneNumber}
+              <strong>Phone Number:</strong> {personalInfo.phoneNumber}
             </Typography>
             <Typography variant="body1">
-              <strong>Address:</strong> {orderData.address}
+              <strong>Address:</strong> {personalInfo.address}
             </Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h6">Shipping and Payment</Typography>
             <Typography variant="body1">
-              <strong>Shipping Name:</strong> {orderData.shippingName}
+              <strong>Shipping Name:</strong> {shippingInfo.shippingTitle}
             </Typography>
             <Typography variant="body1">
-              <strong>Shipping Description:</strong> {orderData.shippingDescription}
+              <strong>Shipping Description:</strong>{' '}
+              {shippingInfo.shippingDescription}
             </Typography>
             <Typography variant="body1">
-              <strong>Price:</strong> {orderData.price}
+              <strong>Price:</strong> {shippingInfo.priceSelected}
             </Typography>
             <Typography variant="body1">
-              <strong>Payment Name:</strong> {orderData.paymentName}
+              <strong>Payment Name:</strong> {paymentOptionsInfo.paymentOptionTitle}
             </Typography>
             <Typography variant="body1">
-              <strong>Payment Description:</strong> {orderData.paymentDescription}
+              <strong>Payment Description:</strong>{' '}
+              {paymentOptionsInfo.paymentOptionDescription}
             </Typography>
             <Typography variant="body1">
-              <strong>Total Price:</strong> {orderData.totalPrice}
+              <strong>Total Price:</strong> {personalInfo.totalPrice}
             </Typography>
             <Typography variant="body1">
-              <strong>Date:</strong> {orderData.date}
+              <strong>Date:</strong> {personalInfo.date}
             </Typography>
           </Grid>
         </Grid>
@@ -123,15 +122,25 @@ const OrderDetails = () => {
           <Table>
             <TableHead className={classes.tableHeader}>
               <TableRow>
-                <TableCell className={classes.tableHeaderCell}>Product Image</TableCell>
-                <TableCell className={classes.tableHeaderCell}>Product Name</TableCell>
-                <TableCell className={classes.tableHeaderCell}>Product Price</TableCell>
-                <TableCell className={classes.tableHeaderCell}>Quantity</TableCell>
-                <TableCell className={classes.tableHeaderCell}>Total Price</TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Product Image
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Product Name
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Product Price
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Quantity
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Total Price
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {orderData.cartItems.map((item) => (
+              {shoppingCartInfo.map((item) => (
                 <TableRow key={item.productId}>
                   <TableCell>
                     <Avatar
@@ -151,6 +160,30 @@ const OrderDetails = () => {
           </Table>
         </TableContainer>
       </CardContent>
+      {activeStep === steps.length && (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            pt: 2,
+            pl: 4,
+            pr: 4,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Button variant="contained" href="/" onClick={handleReset}>
+            {activeStep === steps.length
+              ? 'Go To Home'
+              : nextButtonLabels[activeStep]}
+          </Button>
+          <Button variant="contained" onClick={handlePrint}>
+            {activeStep === steps.length
+              ? 'Print'
+              : nextButtonLabels[activeStep]}
+          </Button>
+        </Box>
+      )}
     </Card>
   );
 };

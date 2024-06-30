@@ -23,16 +23,19 @@ import useCheckoutStore from '../store/usecheckoutStore';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { nextButtonLabels, steps } from '../Cart';
+import { getProductByIdApi } from '@/src/api/product/product.api';
+import { shoppingCartInfoType } from './type';
 
 function ShoppingCartTemplate() {
-  const { activeStep, setActiveStep, setShoppingCartInfo } = useCheckoutStore();
+  const { activeStep, setActiveStep, setShoppingCartInfo, shoppingCartInfo } =
+    useCheckoutStore();
   const [totalPrice, setTotalPrice] = useState(0);
   const { mutate: updateMutate } = useUpdateCart();
   const [loading, setLoading] = useState(true);
   const { state } = useUserContext();
   const { data, refetch } = useGetCartById(state.userId);
+
   const [productId, setProductId] = useState('');
- 
 
   const { data: productData } = useGetProductById(productId);
 
@@ -40,44 +43,82 @@ function ShoppingCartTemplate() {
     const fetchData = async () => {
       if (data) {
         const fetchPromises = data.map(async (product) => {
-          setProductId(product.id);
-        await refetch();
-return product.id
+          setProductId(product.productId);
+          await refetch();
+          return product.productId;
         });
-        fetchPromises.map((item) => {
-          item.then((res) => console.log(res));
-        });
-        const a = await Promise.all(fetchPromises);
+        const productIds = await Promise.all(fetchPromises);
+
+        const promises = productIds.map((productId) =>
+          getProductByIdApi(productId.toString())
+        );
+        const results = await Promise.all(promises);
 
         setLoading(false);
+
+        const cartInfo = data.map((product, index) => ({
+          productName: product.name,
+          productImage: product.image,
+          productPrice: product.price,
+          productQty: product.qty,
+          productTotalPrice: product.price * product.qty,
+          id: productIds[index],
+          qty: results[index]?.qty,
+        }));
+
+        setShoppingCartInfo(cartInfo);
 
         const calculatedTotalPrice = data.reduce(
           (result, product) => result + product.price * product.qty,
           0
         );
         setTotalPrice(calculatedTotalPrice);
-
-        const cartInfo = data.map((product) => ({
-          productName: product.name,
-          productImage: product.image,
-          productPrice: product.price,
-          productQty: product.qty,
-          productTotalPrice: product.price * product.qty,
-          id: productData?.id,
-          qty: productData?.qty,
-        }));
-
-        setShoppingCartInfo(cartInfo);
       }
     };
 
-    fetchData(); // Call fetchData function
+    fetchData();
+  }, [
+    data,
+    setShoppingCartInfo,
+    refetch,
+    productData,
+    productId,
+    state.isLogin,
+  ]);
 
-    // Dependency array: specify dependencies that useEffect should watch for changes
-  }, [data, setShoppingCartInfo, refetch, productData]); // Add dependencies as needed
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (data) {
+  //       const fetchPromises = data.map(product => getProductByIdApi(product.id.toString()));
+  //       const results = await Promise.all(fetchPromises);
 
+  //       const cartInfo = data.map((product, index) => ({
+  //         productName: product.name,
+  //         productImage: product.image,
+  //         productPrice: product.price,
+  //         productQty: product.qty,
+  //         productTotalPrice: product.price * product.qty,
+  //         id: product.id,
+  //         qty: results[index]?.qty,
+  //       }));
+
+  //       setShoppingCartInfo(cartInfo);
+
+  //       const calculatedTotalPrice = data.reduce(
+  //         (result, product) => result + product.price * product.qty,
+  //         0
+  //       );
+  //       setTotalPrice(calculatedTotalPrice);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [data, setShoppingCartInfo]);
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    if (shoppingCartInfo) {
+      setActiveStep(activeStep + 1);
+    }
   };
 
   const handleBack = () => {
@@ -91,7 +132,12 @@ return product.id
   };
 
   const handleAddQuantity = (productInCart: CartDataType) => {
-    if (productData?.qty && productInCart.qty < productData?.qty) {
+    if (
+      productInCart.qty <
+      shoppingCartInfo.find(
+        (item: shoppingCartInfoType) => item.id === productInCart.productId
+      )?.qty
+    ) {
       const newProduct = { ...productInCart, qty: productInCart.qty + 1 };
       updateMutate(newProduct);
       setTotalPrice((old) => old + newProduct.price);
@@ -108,7 +154,6 @@ return product.id
       setTotalPrice((old) => old - newProduct.price);
     }
   };
-
   return (
     <Box sx={{ p: 2 }}>
       <Grid container spacing={2}>

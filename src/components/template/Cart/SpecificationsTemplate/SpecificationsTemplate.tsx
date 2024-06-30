@@ -11,6 +11,7 @@ import { useGetUserById, useUpdateUser } from '@/src/api/auth/auth.queries';
 
 import { useUserContext } from '@/src/context/authContext';
 import useCheckoutStore from '../store/usecheckoutStore';
+import { generate_token } from '@/src/lib/helper';
 
 interface FormData {
   firstName: string;
@@ -61,6 +62,8 @@ const SpecificationsTemplate: React.FC = () => {
       phoneNumber,
       address,
       userId,
+      date: new Date().toISOString(),
+      orderNumber: generate_token(5),
     });
   }, [
     firstName,

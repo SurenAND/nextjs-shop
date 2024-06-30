@@ -18,12 +18,15 @@
     "@mui/x-data-grid": "^7.7.0",
     "axios": "^1.7.2",
     "cookies-next": "^4.2.1",
+    "html2canvas": "^1.4.1",
     "json-server": "^0.17.4",
+    "jspdf": "^2.5.1",
     "next": "^14.2.4",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
     "react-query": "^3.39.3",
+    "react-to-print": "^2.15.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

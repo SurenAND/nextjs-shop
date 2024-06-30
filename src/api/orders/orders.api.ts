@@ -13,7 +13,7 @@ export const updateOrderApi = async (order: OrderDataType) => {
 
 
 
-export const addOrderApi = async (orders) => {
+export const addOrderApi = async (orders:OrderDataType) => {
   const response = await api.post("/orders", orders);
   return response.data;
 };

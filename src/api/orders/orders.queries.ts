@@ -1,3 +1,4 @@
+import { OrderDataType } from '@/src/api/orders/orders.type';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addOrderApi, getOrdersApi, updateOrderApi } from './orders.api';
 import { OrderDataType } from './orders.type';
@@ -25,7 +26,7 @@ export const useUpdateOrder = () => {
 export const useAddOrder = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (newOrder) => addOrderApi(newOrder),
+    mutationFn: (newOrder:OrderDataType) => addOrderApi(newOrder),
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: ['orders'],
