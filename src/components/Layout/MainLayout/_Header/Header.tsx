@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { MainRoutes } from "@/src/constant/routes";
 import Search from "@/src/components/shared/Search/Search";
 import Image from "next/image";
+import useCheckoutStore from "@/src/components/template/Cart/store/usecheckoutStore";
 
 type HeaderProps = {
   isLogin: boolean;
@@ -23,7 +24,7 @@ type HeaderProps = {
 export default function Header({ isLogin }: HeaderProps) {
   const { pathname, push: pushRouter } = useRouter();
   const { state, dispatch } = useUserContext();
-
+  const { reset } = useCheckoutStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -36,10 +37,14 @@ export default function Header({ isLogin }: HeaderProps) {
   };
 
   const handleLogout = () => {
+    reset()
     dispatch({
       type: AuthReducerAction.LOGOUT,
     });
     handleClose();
+    if (pathname === '/cart') {
+      pushRouter('/');
+    }
   };
 
   return (

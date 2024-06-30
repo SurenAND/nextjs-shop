@@ -1,4 +1,5 @@
-import { useQuery } from "react-query";
+import { useQuery } from 'react-query';
+
 import { CategoriesDataType } from "./category.type";
 import { getCategoriesApi } from "./category.api";
 

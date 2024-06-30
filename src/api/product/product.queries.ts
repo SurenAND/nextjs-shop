@@ -1,5 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { ProductDataType } from "./product.type";
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { ProductDataType } from './product.type';
 import {
   createProductApi,
   deleteProductApi,
@@ -7,27 +7,28 @@ import {
   getProductByIdApi,
   getProductListApi,
   updateProductApi,
-} from "./product.api";
+} from './product.api';
 
 export const useGetProducts = () => {
   return useQuery<ProductDataType>({
-    queryKey: ["products"],
+    queryKey: ['products'],
     queryFn: () => getProductListApi(),
-    refetchOnMount: "always",
+    refetchOnMount: 'always',
   });
 };
 
 export const useGetProductById = (productId: string) => {
   return useQuery<ProductDataType>({
-    queryKey: ["products", "single", productId],
+    queryKey: ['products', 'single', productId],
     queryFn: () => getProductByIdApi(productId),
-    refetchOnMount: "always",
+    refetchOnMount: 'always',
+    enabled: !!productId,
   });
 };
 
 export const useGetProductByCategory = (category: string) => {
   return useQuery<ProductDataType[]>({
-    queryKey: ["products", "category", category],
+    queryKey: ['products', 'category', category],
     queryFn: () => getProductByCategoryApi(category),
   });
 };
@@ -38,7 +39,7 @@ export const useCreateProduct = () => {
     mutationFn: (newProduct: ProductDataType) => createProductApi(newProduct),
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ["products"],
+        queryKey: ['products'],
       });
     },
   });
@@ -50,7 +51,7 @@ export const useDeleteProduct = () => {
     mutationFn: (id: string) => deleteProductApi(id),
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ["products"],
+        queryKey: ['products'],
       });
     },
   });
@@ -62,10 +63,10 @@ export const useUpdateProduct = () => {
     mutationFn: (newProduct: ProductDataType) => updateProductApi(newProduct),
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: ["products", "category", data.category],
+        queryKey: ['products', 'category', data.category],
       });
       queryClient.invalidateQueries({
-        queryKey: ["products", "single", data.id],
+        queryKey: ['products', 'single', data.id],
       });
     },
   });

@@ -10,3 +10,9 @@ export const updateOrderApi = async (order: OrderDataType) => {
   const response = await api.put(`/orders/${order.id}`, order);
   return response.data;
 };
+
+export const addOrderApi = async (orders:OrderDataType) => {
+  const response = await api.post("/orders", orders);
+  return response.data;
+};
+
