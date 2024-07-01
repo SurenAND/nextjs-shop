@@ -9,7 +9,7 @@ type cartItemType = {
 };
 
 export type OrderDataType = {
-  id:string
+  id: string;
   userId: string;
   orderNumber: string;
   date: string;
@@ -19,9 +19,10 @@ export type OrderDataType = {
   address: string;
   shippingName: string;
   shippingDescription: string;
-  price: number;
+  shippingCost: number;
   paymentName: string;
   paymentDescription: string;
+  status?: string;
   cartItems: cartItemType[];
-  totalPrice: ()=>number;
+  totalPrice: number | (() => number);
 };
