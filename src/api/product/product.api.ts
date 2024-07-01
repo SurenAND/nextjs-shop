@@ -1,13 +1,18 @@
-import api from "../config.api";
-import { ProductDataType } from "./product.type";
+import api from '../config.api';
+import { ProductDataType } from './product.type';
 
 export const getProductByCategoryApi = async (category: string) => {
   const response = await api.get(`/products?category=${category}`);
   return response.data;
 };
 
+export const getProductByBrandApi = async (brand: string) => {
+  const response = await api.get(`/products?brand_name=${brand}`);
+  return response.data;
+};
+
 export const createProductApi = async (product: ProductDataType) => {
-  const response = await api.post("/products", product);
+  const response = await api.post('/products', product);
   return response.data;
 };
 
@@ -27,6 +32,6 @@ export const getProductByIdApi = async (productId: string) => {
 };
 
 export const getProductListApi = async () => {
-  const response = await api.get("/products");
+  const response = await api.get('/products');
   return response.data;
 };

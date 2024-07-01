@@ -1,4 +1,5 @@
 import Layout from '@/src/components/Layout/MainLayout/Layout';
+import BrandsTemplate from '@/src/components/template/Brands/Brands';
 import CategoriesTemplate from '@/src/components/template/Categories/Categories';
 import ProductTemplate from '@/src/components/template/Product/Product';
 import { Typography } from '@mui/material';
@@ -14,10 +15,8 @@ export default function CategorySlug() {
 
   return (
     <>
-      {slug.length === 1 && slug[0] != 'all' ? (
-        <CategoriesTemplate category={slug[0] as string} />
-      ) : slug.length === 1 && slug[0] == 'all' ? (
-        <Typography>alllll</Typography>
+      {slug.length === 1 ? (
+        <BrandsTemplate brand={slug[0] as string} />
       ) : slug.length === 2 ? (
         <ProductTemplate
           category={slug[0] as string}
