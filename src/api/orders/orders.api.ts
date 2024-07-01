@@ -11,6 +11,11 @@ export const getOrderByIdApi = async (orderId: string) => {
   return response.data;
 };
 
+export const getOrdersByUserIdApi = async (userId: string) => {
+  const response = await api.get(`/orders?userId=${userId}`);
+  return response.data;
+};
+
 export const updateOrderApi = async (order: OrderDataType) => {
   const response = await api.put(`/orders/${order.id}`, order);
   return response.data;

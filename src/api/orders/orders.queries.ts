@@ -4,6 +4,7 @@ import {
   addOrderApi,
   getOrderByIdApi,
   getOrdersApi,
+  getOrdersByUserIdApi,
   updateOrderApi,
 } from "@/src/api/orders/orders.api";
 
@@ -21,6 +22,15 @@ export const useGetOrderById = (orderId: string) => {
     queryFn: () => getOrderByIdApi(orderId),
     refetchOnMount: "always",
     enabled: !!orderId,
+  });
+};
+
+export const useGetOrdersByUserId = (userId: string) => {
+  return useQuery<OrderDataType[]>({
+    queryKey: ["orders", "user", userId],
+    queryFn: () => getOrdersByUserIdApi(userId),
+    refetchOnMount: "always",
+    enabled: !!userId,
   });
 };
 
