@@ -4,7 +4,7 @@ export type AuthStateType = {
   isLogin: boolean;
   userName: string;
   role: string;
-  userId:string
+  userId: string;
 };
 
 export type AuthReducerActionType =
@@ -13,9 +13,15 @@ export type AuthReducerActionType =
       payload: {
         userName: string;
         role: string;
-        id:string
+        id: string;
       };
     }
   | {
       type: AuthReducerAction.LOGOUT;
+    }
+  | {
+      type: AuthReducerAction.UPDATE_USER_NAME;
+      payload: {
+        userName: string;
+      };
     };

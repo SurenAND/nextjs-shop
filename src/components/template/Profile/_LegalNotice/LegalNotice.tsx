@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 
 const LegalNotice = () => {
   return (
-    <Stack width="100%" alignItems="center" p={2}>
+    <Stack width="100%" alignItems="center" p={2} height="75vh">
       <Typography
         variant="h1"
         fontSize="2rem"

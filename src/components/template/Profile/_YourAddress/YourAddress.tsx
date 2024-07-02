@@ -32,7 +32,7 @@ const YourAddress = () => {
   ];
 
   return (
-    <Stack width="100%" height="100%" alignItems="center">
+    <Stack width="100%" alignItems="center" height="75vh">
       {!show && (
         <Typography
           variant="h1"

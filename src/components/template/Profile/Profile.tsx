@@ -13,11 +13,13 @@ const ProfileTemplate = () => {
   return (
     <Box
       width="60%"
-      border="1px solid #cfcfcf"
       borderRadius="5px"
-      minHeight="50vh"
-      maxHeight="80vh"
-      sx={{ overflowY: "auto" }}
+      sx={{
+        overflowY: "auto",
+        boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+        bgcolor: "#fff",
+        zIndex: 100,
+      }}
     >
       {/* profile main section */}
       {!activePage && (
@@ -25,7 +27,7 @@ const ProfileTemplate = () => {
           spacing={2}
           alignItems="center"
           justifyContent="center"
-          height="75vh"
+          height="100%"
         >
           <Typography variant="h3" fontWeight={900} textTransform="uppercase">
             Hi, {state.userName}

@@ -24,7 +24,29 @@ const YourOrders = () => {
   };
 
   return (
-    <Stack width="100%" height="100%" gap={2} p={3} sx={{ userSelect: "none" }}>
+    <Stack
+      width="100%"
+      height={data && data.length === 0 ? "100%" : "75vh"}
+      gap={2}
+      p={3}
+      sx={{ userSelect: "none" }}
+    >
+      {data && data.length === 0 && (
+        <Stack
+          spacing={2}
+          alignItems="center"
+          justifyContent="center"
+          height="100%"
+        >
+          <Typography variant="h3" fontWeight={900} textTransform="uppercase">
+            No orders yet
+          </Typography>
+          <Typography variant="h4" textTransform="capitalize">
+            Your orders will appear here
+          </Typography>
+        </Stack>
+      )}
+
       {data &&
         data.map((item) => (
           <Stack

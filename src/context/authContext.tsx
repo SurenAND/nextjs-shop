@@ -54,6 +54,14 @@ function authReducer(
         role: "",
         userId: "",
       };
+    case AuthReducerAction.UPDATE_USER_NAME:
+      setCookie("userName", action.payload.userName, {
+        expires: expireDate,
+      });
+      return {
+        ...state,
+        userName: action.payload.userName,
+      };
     default:
       return state;
   }
