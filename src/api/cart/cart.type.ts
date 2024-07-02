@@ -7,7 +7,5 @@ export type CartDataType = {
   description: string;
   qty: number;
   userId: string;
-  productId:string
+  productId: string;
 };
-
-

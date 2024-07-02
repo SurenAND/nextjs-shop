@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { orange } from "@mui/material/colors";
 import { useEffect, useState } from "react";
-import { generate_token } from "../../../lib/helper";
+import { generate_token } from "@/src/lib/helper";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";

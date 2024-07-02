@@ -1,5 +1,5 @@
-import api from '../config.api';
-import { CartDataType } from './cart.type';
+import api from "../config.api";
+import { CartDataType } from "./cart.type";
 
 export const getCartByIdApi = async (id: string) => {
   const response = await api.get(`/cart?userId=${id}`);
@@ -16,7 +16,12 @@ export const updateCartApi = async (productInCart: CartDataType) => {
   return response.data;
 };
 
-export const clearUserCartApi = async (userId:string) => {
+export const clearUserCartApi = async (userId: string) => {
   const response = await api.delete(`/cart?userId=${userId}`);
+  return response.data;
+};
+
+export const addProductToCartApi = async (product: CartDataType) => {
+  const response = await api.post("/cart", product);
   return response.data;
 };

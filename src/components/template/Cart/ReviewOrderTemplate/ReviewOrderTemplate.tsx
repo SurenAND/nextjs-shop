@@ -1,40 +1,40 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import InfoIcon from '@mui/icons-material/Info';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
-import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat';
-import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { nextButtonLabels, steps } from '../Cart';
-import useCheckoutStore from '../store/usecheckoutStore';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import PaymentIcon from '@mui/icons-material/Payment';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import { useAddOrder } from '@/src/api/orders/orders.queries';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import InfoIcon from "@mui/icons-material/Info";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
+import DirectionsBoatIcon from "@mui/icons-material/DirectionsBoat";
+import TwoWheelerIcon from "@mui/icons-material/TwoWheeler";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { nextButtonLabels, steps } from "../Cart";
+import useCheckoutStore from "../store/usecheckoutStore";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import PaymentIcon from "@mui/icons-material/Payment";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import { useAddOrder } from "@/src/api/orders/orders.queries";
 import {
   useGetProductById,
   useUpdateProduct,
-} from '@/src/api/product/product.queries';
-import { useGetCartById } from '@/src/api/cart/cart.queries';
-import { useUserContext } from '@/src/context/authContext';
-import { useEffect, useState } from 'react';
-import api from '@/src/api/config.api';
-import { OrderDataType } from '@/src/api/orders/orders.type';
-import { generate_token } from '@/src/lib/helper';
-import { getProductByIdApi } from '@/src/api/product/product.api';
+} from "@/src/api/product/product.queries";
+import { useGetCartById } from "@/src/api/cart/cart.queries";
+import { useUserContext } from "@/src/context/authContext";
+import { useEffect, useState } from "react";
+import api from "@/src/api/config.api";
+import { OrderDataType } from "@/src/api/orders/orders.type";
+import { generate_token } from "@/src/lib/helper";
+import { getProductByIdApi } from "@/src/api/product/product.api";
 const ReviewOrderTemplate = () => {
   const { mutate: addOrder } = useAddOrder();
   const { mutate: updateProduct } = useUpdateProduct();
@@ -42,16 +42,12 @@ const ReviewOrderTemplate = () => {
   const { state } = useUserContext();
   const userId = state.userId;
   const { data: dataCart } = useGetCartById(userId);
-  const [cartItems, setCartItems] = useState(dataCart)
-  const { data,  } = useGetCartById(state.userId);
+  const [cartItems, setCartItems] = useState(dataCart);
+  const { data } = useGetCartById(state.userId);
 
-  const [productId, setProductId] = useState('');
-
+  const [productId, setProductId] = useState("");
 
   useEffect(() => {
-
-
-
     if (dataCart) {
       setCartItems(dataCart);
     }
@@ -94,7 +90,7 @@ const ReviewOrderTemplate = () => {
       ) + shipping.shippingCost
     );
   };
-  
+
 
 
   
@@ -119,15 +115,12 @@ const ReviewOrderTemplate = () => {
       address: personalInfo.address,
       shippingName: shippingInfo.shippingTitle,
       shippingDescription: shippingInfo.shippingDescription,
-      price: shippingInfo.priceSelected,
+      shippingCost: shippingInfo.priceSelected,
       paymentName: paymentOptionsInfo.paymentOptionTitle,
       paymentDescription: paymentOptionsInfo.paymentOptionDescription,
       cartItems: updateProductThenOrder,
       totalPrice: getTotalPrice(),
     };
-
-
-
 
     if (data) {
       const fetchPromises = data.map(async (product) => {
@@ -139,7 +132,9 @@ const ReviewOrderTemplate = () => {
       );
       const results = await Promise.all(promises);
       results.forEach((product) => {
-        const cartItem = shoppingCartInfo.find(item => item.id === product.id);
+        const cartItem = shoppingCartInfo.find(
+          (item) => item.id === product.id
+        );
 
         if (cartItem) {
           updateProduct({ ...product, qty: product.qty - cartItem.productQty });
@@ -147,14 +142,11 @@ const ReviewOrderTemplate = () => {
       });
     }
 
-
-
-
     addOrder(orderData);
 
     ///delete product in cart
     if (!cartItems) {
-      console.error('No cart items available');
+      console.error("No cart items available");
       return;
     }
     try {
@@ -163,22 +155,22 @@ const ReviewOrderTemplate = () => {
       );
       await Promise.all(deleteRequests);
     } catch (error) {
-      console.error('Error deleting all cart items:', error);
+      console.error("Error deleting all cart items:", error);
     }
     setActiveStep(activeStep + 1);
   };
 
   return (
-    <Box sx={{ p: 2, backgroundColor: '#e0f7fa', minHeight: '100vh' }}>
+    <Box sx={{ p: 2, backgroundColor: "#e0f7fa", minHeight: "100vh" }}>
       <Paper
         elevation={3}
-        sx={{ p: 4, borderRadius: 4, backgroundColor: '#ffffff' }}
+        sx={{ p: 4, borderRadius: 4, backgroundColor: "#ffffff" }}
       >
         <Typography
           variant="h4"
           gutterBottom
           align="center"
-          sx={{ mb: 4, color: '#00796b' }}
+          sx={{ mb: 4, color: "#00796b" }}
         >
           Invoice Preview
         </Typography>
@@ -186,10 +178,10 @@ const ReviewOrderTemplate = () => {
         <Box sx={{ mb: 4 }}>
           <Grid container alignItems="center" sx={{ mb: 2 }}>
             <Grid item>
-              <ShoppingCartIcon sx={{ color: '#004d40', mr: 1 }} />
+              <ShoppingCartIcon sx={{ color: "#004d40", mr: 1 }} />
             </Grid>
             <Grid item>
-              <Typography variant="h5" sx={{ color: '#004d40' }}>
+              <Typography variant="h5" sx={{ color: "#004d40" }}>
                 Shopping Cart
               </Typography>
             </Grid>
@@ -197,7 +189,7 @@ const ReviewOrderTemplate = () => {
           <Grid container spacing={2}>
             {shoppingCartInfo.map((item) => (
               <Grid item xs={12} key={item.productId}>
-                <Card sx={{ display: 'flex', alignItems: 'center' }}>
+                <Card sx={{ display: "flex", alignItems: "center" }}>
                   <CardMedia
                     component="img"
                     sx={{ width: 50, height: 50 }}
@@ -206,13 +198,13 @@ const ReviewOrderTemplate = () => {
                   />
                   <Box
                     sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
+                      display: "flex",
+                      flexDirection: "column",
                       flex: 1,
                       ml: 2,
                     }}
                   >
-                    <CardContent sx={{ flex: '1 0 auto' }}>
+                    <CardContent sx={{ flex: "1 0 auto" }}>
                       <Typography component="div" variant="body1">
                         {item.productName}
                       </Typography>
@@ -238,10 +230,10 @@ const ReviewOrderTemplate = () => {
         <Box sx={{ mb: 4 }}>
           <Grid container alignItems="center" sx={{ mb: 2 }}>
             <Grid item>
-              <InfoIcon sx={{ color: 'red', mr: 1 }} />
+              <InfoIcon sx={{ color: "red", mr: 1 }} />
             </Grid>
             <Grid item>
-              <Typography variant="h5" sx={{ color: '#004d40' }}>
+              <Typography variant="h5" sx={{ color: "#004d40" }}>
                 Specifications
               </Typography>
             </Grid>
@@ -250,7 +242,7 @@ const ReviewOrderTemplate = () => {
             {Object.keys(specifications).map((key) => (
               <Grid item xs={12} sm={6} key={key}>
                 <Typography variant="body1">
-                  <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{' '}
+                  <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
                   {specifications[key]}
                 </Typography>
               </Grid>
@@ -271,12 +263,12 @@ const ReviewOrderTemplate = () => {
               ) : shippingInfo.selected === 4 ? (
                 <TwoWheelerIcon fontSize="large" />
               ) : (
-                ''
+                ""
               )}
             </Grid>
 
             <Grid item>
-              <Typography variant="h5" sx={{ color: '#004d40' }}>
+              <Typography variant="h5" sx={{ color: "#004d40" }}>
                 Shipping
               </Typography>
             </Grid>
@@ -301,11 +293,11 @@ const ReviewOrderTemplate = () => {
               ) : payment.id === 4 ? (
                 <LocalAtmIcon fontSize="large" />
               ) : (
-                ''
+                ""
               )}
             </Grid>
             <Grid item>
-              <Typography variant="h5" sx={{ color: '#004d40' }}>
+              <Typography variant="h5" sx={{ color: "#004d40" }}>
                 Payment
               </Typography>
             </Grid>
@@ -320,10 +312,10 @@ const ReviewOrderTemplate = () => {
         <Box sx={{ mt: 4 }}>
           <Grid container alignItems="center" sx={{ mb: 2 }}>
             <Grid item>
-              <CheckCircleIcon sx={{ color: '#004d40', mr: 1 }} />
+              <CheckCircleIcon sx={{ color: "#004d40", mr: 1 }} />
             </Grid>
             <Grid item>
-              <Typography variant="h5" sx={{ color: '#004d40' }}>
+              <Typography variant="h5" sx={{ color: "#004d40" }}>
                 Total Price
               </Typography>
             </Grid>
@@ -333,13 +325,13 @@ const ReviewOrderTemplate = () => {
       </Paper>
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
+          display: "flex",
+          flexDirection: "row",
           pt: 2,
           pl: 4,
           pr: 4,
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         <Button
@@ -349,9 +341,9 @@ const ReviewOrderTemplate = () => {
           startIcon={<ArrowBackIosNewIcon />}
         >
           {activeStep === 0
-            ? 'Back'
+            ? "Back"
             : activeStep === 1
-            ? 'Go to Cart'
+            ? "Go to Cart"
             : ` ${nextButtonLabels[activeStep - 2]}`}
         </Button>
         <Button
@@ -360,10 +352,9 @@ const ReviewOrderTemplate = () => {
           onClick={handOrder}
         >
           {activeStep === steps.length - 1
-            ? 'Invoice '
+            ? "Invoice "
             : nextButtonLabels[activeStep]}
         </Button>
-
       </Box>
     </Box>
   );

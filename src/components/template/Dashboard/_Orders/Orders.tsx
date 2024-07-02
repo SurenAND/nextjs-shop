@@ -1,55 +1,75 @@
-import {
-  Box,
-  Button,
-  MenuItem,
-  Select,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useGetOrders, useUpdateOrder } from "@/src/api/orders/orders.queries";
 import { OrderDataType } from "@/src/api/orders/orders.type";
 import { removeHyphens } from "@/src/lib/helper";
+import DescriptionIcon from "@mui/icons-material/Description";
+import OrderModal from "@/src/components/template/Dashboard/_Orders/_OrderModal/OrderModal";
 
 export default function Orders() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [orderId, setOrderId] = useState("");
+
   const columns: GridColDef<OrderDataType>[] = [
     {
-      field: "id",
-      headerName: "ID",
-      width: 90,
-      type: "number",
+      field: "orderNumber",
+      headerName: "Order Number",
+      width: 145,
       disableColumnMenu: true,
-      headerAlign: "center",
-      align: "center",
       resizable: false,
+      renderCell: (params) => {
+        return (
+          <Stack justifyContent="center" alignItems="center" height="100%">
+            <Typography>{params.value}</Typography>
+          </Stack>
+        );
+      },
     },
     {
-      field: "name",
-      headerName: "Product Name",
+      field: "date",
+      headerName: "Date",
       width: 200,
       resizable: false,
+      renderCell: (params) => {
+        return (
+          <Stack justifyContent="center" alignItems="start" height="100%">
+            <Typography>
+              {new Date(params.value).toLocaleDateString("en-US", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}{" "}
+              {new Date(params.value).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })}
+            </Typography>
+          </Stack>
+        );
+      },
     },
     {
-      field: "qty",
-      headerName: "Quantity",
+      field: "totalPrice",
+      headerName: "Total Price",
       type: "number",
       width: 150,
       align: "left",
       headerAlign: "left",
       resizable: false,
+      renderCell: (params) => {
+        return (
+          <Stack justifyContent="center" alignItems="center" height="100%">
+            <Typography>{params.value} $</Typography>
+          </Stack>
+        );
+      },
     },
     {
-      field: "price",
-      headerName: "Price",
-      type: "number",
-      width: 110,
-      align: "left",
-      headerAlign: "left",
-      resizable: false,
-    },
-    {
-      field: "shipment",
+      field: "shippingName",
       headerName: "Shipment",
       type: "string",
       width: 150,
@@ -97,7 +117,35 @@ export default function Orders() {
         );
       },
     },
+    {
+      field: "actions",
+      headerName: "View More",
+      width: 150,
+      align: "center",
+      disableColumnMenu: true,
+      renderCell: (params) => {
+        const onButtonClick = (row: OrderDataType) => {
+          setOrderId(String(row.id));
+          handleOpen();
+        };
+        return (
+          <IconButton
+            sx={{
+              bgcolor: "#ece6f5",
+              borderRadius: "8px",
+              transition: "all .2s ease-in-out",
+              color: "#5e35b0",
+              "&:hover": { bgcolor: "#4527a1", color: "#fff" },
+            }}
+            onClick={() => onButtonClick(params.row)}
+          >
+            <DescriptionIcon />
+          </IconButton>
+        );
+      },
+    },
   ];
+
   const { data } = useGetOrders();
   const { mutate } = useUpdateOrder();
 
@@ -161,6 +209,7 @@ export default function Orders() {
       >
         Update
       </Button>
+      <OrderModal open={open} handleClose={handleClose} orderId={orderId} />
     </Stack>
   );
 }

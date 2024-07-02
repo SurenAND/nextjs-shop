@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { MainRoutes } from '@/src/constant/routes';
 import { useUserContext } from '@/src/context/authContext';
 import { AuthReducerAction } from '@/src/types/enums';
@@ -5,6 +6,14 @@ import { AuthReducerAction } from '@/src/types/enums';
 import { useRouter } from 'next/router';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { UserDataType } from './auth.type';
+=======
+import { MainRoutes } from "@/src/constant/routes";
+import { useUserContext } from "@/src/context/authContext";
+import { AuthReducerAction } from "@/src/types/enums";
+import { useRouter } from "next/router";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { UserDataType } from "@/src/api/auth/auth.type";
+>>>>>>> 1b1e5638163cc3a7044c89459c9b29495458e691
 import {
   createUserApi,
   deleteUserApi,
@@ -12,7 +21,7 @@ import {
   getUserByIdApi,
   getUsersApi,
   updateUserApi,
-} from './auth.api';
+} from "@/src/api/auth/auth.api";
 
 export const useLogin = (email: string, password: string) => {
   const router = useRouter();
@@ -46,29 +55,9 @@ export const useSignUp = () => {
   });
 };
 
-export const useGetUsers = () => {
-  return useQuery<UserDataType>({
-    queryKey: ['users'],
-    queryFn: () => getUsersApi(),
-    refetchOnMount: true,
-  });
-};
-
-export const useUpdateUser = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (newUser: UserDataType) => updateUserApi(newUser),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['users'],
-      });
-    },
-  });
-};
-
 export const useGetUserById = (id: string) => {
   return useQuery<UserDataType>({
-    queryKey: ['users', 'single', id],
+    queryKey: ["users", "single", id],
     queryFn: () => getUserByIdApi(id),
     refetchOnMount: true,
   });
@@ -79,6 +68,26 @@ export const useDeleteUser = () => {
   return useMutation({
     mutationFn: (id: string) => deleteUserApi(id),
     onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ["users"],
+      });
+    },
+  });
+};
+
+export const useGetUsers = () => {
+  return useQuery<UserDataType>({
+    queryKey: ["users"],
+    queryFn: () => getUsersApi(),
+    refetchOnMount: true,
+  });
+};
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (newUser: UserDataType) => updateUserApi(newUser),
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["users"],
       });
