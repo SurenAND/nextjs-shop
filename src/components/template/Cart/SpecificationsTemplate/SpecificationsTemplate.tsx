@@ -29,6 +29,7 @@ const SpecificationsTemplate: React.FC = () => {
   } = useForm<FormData>();
   const { mutate: UpdateUser } = useUpdateUser();
   const { state } = useUserContext();
+  
   const { data: userData } = useGetUserById(state.userId);
 
 

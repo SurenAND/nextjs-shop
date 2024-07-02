@@ -73,11 +73,11 @@ const ReviewOrderTemplate = () => {
     address: personalInfo.address,
   };
 
-  const shipping = {
+ const shipping = {
     id: shippingInfo.selected,
     name: shippingInfo.shippingTitle,
     description: shippingInfo.shippingDescription,
-    price: shippingInfo.priceSelected,
+    shippingCost: shippingInfo.priceSelected,
   };
 
   const payment = {
@@ -86,15 +86,15 @@ const ReviewOrderTemplate = () => {
     description: paymentOptionsInfo.paymentOptionDescription,
   };
 
-  const getTotalPrice = () => {
+ const getTotalPrice = () => {
     return (
       shoppingCartInfo.reduce(
         (total, item) => total + item.productPrice * item.productQty,
         0
-      ) + shipping.price
+      ) + shipping.shippingCost
     );
   };
-
+  
 
 
   
@@ -157,7 +157,6 @@ const ReviewOrderTemplate = () => {
       console.error('No cart items available');
       return;
     }
-
     try {
       const deleteRequests = cartItems.map((item) =>
         api.delete(`/cart/${item.id}`)
@@ -286,7 +285,7 @@ const ReviewOrderTemplate = () => {
           <Typography variant="body1">
             Description: {shipping.description}
           </Typography>
-          <Typography variant="body1">Price: ${shipping.price}</Typography>
+          <Typography variant="body1">Price: ${shipping.shippingCost}</Typography>
           <Divider sx={{ my: 2 }} />
         </Box>
 

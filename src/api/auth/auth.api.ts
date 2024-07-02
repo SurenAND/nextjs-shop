@@ -23,7 +23,8 @@ export const updateUserApi = async (user: UserDataType) => {
 
 export const getUserByIdApi = async (id: string) => {
   const response = await api.get(`/users/${id}`);
-
+  return response.data;
+}
 export const deleteUserApi = async (id: string) => {
   const response = await api.delete(`/users/${id}`);
 

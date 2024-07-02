@@ -35,7 +35,7 @@ function ShoppingCartTemplate() {
   const { state } = useUserContext();
   const { data, refetch } = useGetCartById(state.userId);
 
-  const [productId, setProductId] = useState('');
+  const [productId, setProductId] = useState('1');
 
   const { data: productData } = useGetProductById(productId);
 
@@ -45,9 +45,12 @@ function ShoppingCartTemplate() {
         const fetchPromises = data.map(async (product) => {
           setProductId(product.productId);
           await refetch();
+  
+          
           return product.productId;
         });
         const productIds = await Promise.all(fetchPromises);
+
 
         const promises = productIds.map((productId) =>
           getProductByIdApi(productId.toString())

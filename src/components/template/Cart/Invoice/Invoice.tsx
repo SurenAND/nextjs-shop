@@ -3,7 +3,6 @@ import useCheckoutStore from '../store/usecheckoutStore';
 import { nextButtonLabels, steps } from '../Cart';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
   Card,
   CardContent,
@@ -19,7 +18,7 @@ import {
   Avatar,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { useGetOrders } from '@/src/api/orders/orders.queries';
+
 import { useReactToPrint } from 'react-to-print';
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -57,6 +56,14 @@ const OrderDetails = () => {
   const handleReset = () => {
     reset();
   };
+
+
+
+  const totalPrice=shoppingCartInfo.reduce(
+    (total, item) => total + item.productPrice * item.productQty,
+    0
+  ) + shippingInfo.priceSelected
+
   return (
     <Card className={classes.card}>
       <CardContent ref={componentRef}>
@@ -92,7 +99,7 @@ const OrderDetails = () => {
               {shippingInfo.shippingDescription}
             </Typography>
             <Typography variant="body1">
-              <strong>Price:</strong> {shippingInfo.priceSelected}
+              <strong>Price:</strong> $ {shippingInfo.priceSelected}
             </Typography>
             <Typography variant="body1">
               <strong>Payment Name:</strong> {paymentOptionsInfo.paymentOptionTitle}
@@ -102,7 +109,7 @@ const OrderDetails = () => {
               {paymentOptionsInfo.paymentOptionDescription}
             </Typography>
             <Typography variant="body1">
-              <strong>Total Price:</strong> {personalInfo.totalPrice}
+              <strong>Total Price:</strong> $ {totalPrice}
             </Typography>
             <Typography variant="body1">
               <strong>Date:</strong> {personalInfo.date}

@@ -1,8 +1,7 @@
 import { MainRoutes } from '@/src/constant/routes';
 import { useUserContext } from '@/src/context/authContext';
-import { generate_token } from '@/src/lib/helper';
 import { AuthReducerAction } from '@/src/types/enums';
-import { setCookie } from 'cookies-next';
+
 import { useRouter } from 'next/router';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { UserDataType } from './auth.type';
