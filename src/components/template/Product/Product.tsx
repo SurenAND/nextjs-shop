@@ -20,21 +20,14 @@ import { useUserContext } from "@/src/context/authContext";
 import { useRouter } from "next/router";
 import { MainRoutes } from "@/src/constant/routes";
 import { Toaster, toast } from "sonner";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import {
-  useAddProductToWishlist,
-  useDeleteProductFromWishlist,
-  useGetWishlistProductByUserId,
-} from "@/src/api/wishlist/wishlist.queries";
+import { useGetWishlistProductByUserId } from "@/src/api/wishlist/wishlist.queries";
 import { generate_token } from "@/src/lib/helper";
+import Wishlist from "./components/_Wishlist/Wishlist";
 
 const ProductTemplate = ({ category, productId }: any) => {
   const [qty, setQty] = useState(1);
   const { data, isLoading, isError } = useGetProductById(productId);
   const { mutate } = useAddProductToCart();
-  const { mutate: mutateWishlist } = useAddProductToWishlist();
-  const { mutate: deleteFromWishlist } = useDeleteProductFromWishlist();
   const { state } = useUserContext();
   const userId = state.userId;
   const { data: wishlistData } = useGetWishlistProductByUserId(
@@ -85,33 +78,6 @@ const ProductTemplate = ({ category, productId }: any) => {
     }
   }
 
-  function addToWishlist() {
-    if (data && state.isLogin) {
-      const productId = data.id;
-      const product = {
-        ...data,
-        userId,
-        productId,
-        id: generate_token(5),
-      };
-      mutateWishlist(product);
-      toast.success("Product Added to Wishlist", {
-        className: "bg-green-400 text-white",
-        position: "top-left",
-      });
-    }
-  }
-
-  function removeFromWishlist() {
-    if (wishlistData && state.isLogin) {
-      deleteFromWishlist(wishlistData[0].id);
-      toast.success("Product Removed From Wishlist", {
-        className: "bg-green-400 text-white",
-        position: "top-left",
-      });
-    }
-  }
-
   return (
     <Box component="main" sx={{ py: 10, px: 20 }}>
       {isLoading && (
@@ -153,25 +119,9 @@ const ProductTemplate = ({ category, productId }: any) => {
               <Typography variant="body1" mb={5} color="#6b7280">
                 {data?.description}
               </Typography>
-              <Stack direction="row" alignItems="center" mb={3}>
-                {wishlistData && wishlistData.length > 0 ? (
-                  <IconButton
-                    aria-label="wishlist"
-                    onClick={removeFromWishlist}
-                  >
-                    <FavoriteIcon style={{ color: red[500] }} />
-                  </IconButton>
-                ) : (
-                  <IconButton aria-label="wishlist" onClick={addToWishlist}>
-                    <FavoriteBorderIcon />
-                  </IconButton>
-                )}
-
-                <Typography variant="body1">Add To Wishlist</Typography>
-              </Stack>
+              <Wishlist data={data} wishlistData={wishlistData} />
               {/* sizes */}
               {category === "sneakers" ? <ProductSizes /> : null}
-
               <Typography variant="h5" mb={2}>
                 Quantity
               </Typography>
@@ -191,7 +141,6 @@ const ProductTemplate = ({ category, productId }: any) => {
                   <Typography variant="body2">{data.qty} in Stuck</Typography>
                 )}
               </Stack>
-
               <Stack py={3} pr={3}>
                 <Typography variant="h3" fontSize="1.875rem" mb={1}>
                   ${data?.price?.toFixed(2)}
