@@ -25,7 +25,7 @@ export const useLogin = (email: string, password: string) => {
           type: AuthReducerAction.LOGIN,
           payload: { ...data[0] },
         });
-        router.push(MainRoutes.HOME);
+        router.back();
       }
     },
   });
@@ -41,7 +41,7 @@ export const useSignUp = () => {
         type: AuthReducerAction.LOGIN,
         payload: { ...data },
       });
-      router.push(MainRoutes.HOME);
+      router.back();
     },
   });
 };
@@ -64,4 +64,3 @@ export const useUpdateUser = () => {
     },
   });
 };
-

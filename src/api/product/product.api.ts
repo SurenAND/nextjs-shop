@@ -30,3 +30,14 @@ export const getProductListApi = async () => {
   const response = await api.get("/products");
   return response.data;
 };
+
+export const getProductByPriceApi = async (
+  category: string,
+  min: number,
+  max: number
+) => {
+  const response = await api.get(
+    `/products?category=${category}&price_gte=${min}&price_lte=${max}`
+  );
+  return response.data;
+};

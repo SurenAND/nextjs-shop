@@ -4,4 +4,5 @@ export const MainRoutes = {
   CART: "/cart",
   REGISTER: "/register",
   DASHBOARD: "/dashboard",
+  CATEGORY: "/category",
 };
