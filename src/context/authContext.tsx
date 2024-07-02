@@ -28,6 +28,9 @@ function authReducer(
       setCookie("role", action.payload.role, {
         expires: expireDate,
       });
+      setCookie("id", action.payload.id, {
+        expires: expireDate,
+      });
       setCookie("userName", action.payload.userName, {
         expires: expireDate,
       });

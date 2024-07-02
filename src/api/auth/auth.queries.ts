@@ -45,26 +45,6 @@ export const useSignUp = () => {
   });
 };
 
-export const useGetUsers = () => {
-  return useQuery<UserDataType>({
-    queryKey: ["users"],
-    queryFn: () => getUsersApi(),
-    refetchOnMount: true,
-  });
-};
-
-export const useUpdateUser = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (newUser: UserDataType) => updateUserApi(newUser),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["users"],
-      });
-    },
-  });
-};
-
 export const useGetUserById = (id: string) => {
   return useQuery<UserDataType>({
     queryKey: ["users", "single", id],
@@ -78,6 +58,26 @@ export const useDeleteUser = () => {
   return useMutation({
     mutationFn: (id: string) => deleteUserApi(id),
     onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ["users"],
+      });
+    },
+  });
+};
+
+export const useGetUsers = () => {
+  return useQuery<UserDataType>({
+    queryKey: ["users"],
+    queryFn: () => getUsersApi(),
+    refetchOnMount: true,
+  });
+};
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (newUser: UserDataType) => updateUserApi(newUser),
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["users"],
       });

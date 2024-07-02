@@ -22,7 +22,7 @@ const DealsTemplate = ({ productId }: any) => {
         >
           <Box height={150} position="relative">
             <Image
-              style={{ borderRadius: 6, objectFit: "contain" }}
+              style={{ borderRadius: 6 }}
               src={data?.image}
               alt={data?.name}
               fill

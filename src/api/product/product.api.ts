@@ -12,7 +12,7 @@ export const getProductByBrandApi = async (brand: string) => {
 };
 
 export const createProductApi = async (product: ProductDataType) => {
-  const response = await api.post('/products', product);
+  const response = await api.post("/products", product);
   return response.data;
 };
 
@@ -32,6 +32,17 @@ export const getProductByIdApi = async (productId: string) => {
 };
 
 export const getProductListApi = async () => {
-  const response = await api.get('/products');
+  const response = await api.get("/products");
+  return response.data;
+};
+
+export const getProductByPriceApi = async (
+  category: string,
+  min: number,
+  max: number
+) => {
+  const response = await api.get(
+    `/products?category=${category}&price_gte=${min}&price_lte=${max}`
+  );
   return response.data;
 };
