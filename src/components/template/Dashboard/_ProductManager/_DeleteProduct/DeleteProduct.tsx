@@ -104,6 +104,7 @@ function DeleteProduct() {
       alignItems="center"
       justifyContent="center"
       height="100vh"
+      sx={{ userSelect: "none" }}
     >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
         Delete Product
@@ -121,7 +122,6 @@ function DeleteProduct() {
               paginationModel: { page: 0, pageSize: 5 },
             },
           }}
-          // pageSizeOptions={[5, 10, 15]}
         />
       </Box>
     </Stack>

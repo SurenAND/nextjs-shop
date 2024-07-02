@@ -8,20 +8,18 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import CardComp from "../../shared/Card/Card";
+import CardComp from "@/src/components/shared/Card/Card";
 import {
   useGetProductByCategory,
   useGetProductByPrice,
 } from "@/src/api/product/product.queries";
-import { MouseEvent, useState } from "react";
+import { removeHyphens } from "@/src/lib/helper";
+import { useState } from "react";
 
 const CategoriesTemplate = ({ category }: any) => {
   const [min, setMin] = useState<number>(0);
   const [max, setMax] = useState<number>(0);
   const { data: filterData } = useGetProductByPrice(category, min, max);
-  const removeHyphens = (str: string): string => {
-    return str?.replace(/-/g, " ");
-  };
 
   const { data, isLoading, isError } = useGetProductByCategory(category);
   function filterByPrice(e: any) {

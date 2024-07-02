@@ -7,4 +7,5 @@ export enum ROLES {
 export enum AuthReducerAction {
   LOGIN = "LOGIN",
   LOGOUT = "LOGOUT",
+  UPDATE_USER_NAME = "UPDATE_USER_NAME",
 }

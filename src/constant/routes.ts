@@ -5,4 +5,5 @@ export const MainRoutes = {
   REGISTER: "/register",
   DASHBOARD: "/dashboard",
   CATEGORY: "/category",
+  PROFILE: "/profile",
 };

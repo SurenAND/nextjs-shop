@@ -1,7 +1,7 @@
 import { Drawer } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import { drawerWidth } from "../Layout";
-import DrawerList from "./_DrawerList/DrawerList";
+import { drawerWidth } from "@/src/components/Layout/DashboardLayout/Layout";
+import DrawerList from "@/src/components/Layout/DashboardLayout/_Sidebar/_DrawerList/DrawerList";
 
 export default function Sidebar({
   open,

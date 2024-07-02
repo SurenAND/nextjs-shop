@@ -1,4 +1,4 @@
-import { AuthReducerAction } from "./enums";
+import { AuthReducerAction } from "@/src/types/enums";
 
 export type AuthStateType = {
   isLogin: boolean;
@@ -18,4 +18,10 @@ export type AuthReducerActionType =
     }
   | {
       type: AuthReducerAction.LOGOUT;
+    }
+  | {
+      type: AuthReducerAction.UPDATE_USER_NAME;
+      payload: {
+        userName: string;
+      };
     };

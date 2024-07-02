@@ -3,6 +3,7 @@ export type ProductDataType = {
   name: string;
   price: number;
   category: string;
+  brand_name: string;
   image: string;
   description: string;
   qty: number;
