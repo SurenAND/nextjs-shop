@@ -1,6 +1,6 @@
-import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
-import Image from "next/image";
-import Link from "next/link";
+import { Box, Card, CardContent, Stack, Typography } from '@mui/material';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const CardComp = ({ data }: any) => {
   return (
@@ -13,11 +13,11 @@ const CardComp = ({ data }: any) => {
             </Typography>
             <Box height={240} flexGrow={1} position="relative">
               <Image
-                style={{ borderRadius: 6 }}
+                style={{ borderRadius: 6, objectFit: 'contain' }}
                 src={data?.image}
                 alt={data?.name}
                 fill
-                objectFit="cover"
+                // objectFit="cover"
               />
             </Box>
             <Typography variant="body1">${data?.price}</Typography>
