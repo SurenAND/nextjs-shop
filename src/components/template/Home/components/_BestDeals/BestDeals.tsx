@@ -1,8 +1,8 @@
-import { useGetDealsIds } from '@/src/api/deals/deals.queries';
-import { Box, Stack, Typography } from '@mui/material';
-import React from 'react';
-import DealsTemplate from '../../../Deals/Deals';
-import { DealsDataType } from '@/src/api/deals/deals.type';
+import { useGetDealsIds } from "@/src/api/deals/deals.queries";
+import { Box, Stack, Typography } from "@mui/material";
+import React from "react";
+import DealsTemplate from "@/src/components/template/Home/components/_BestDeals/_Deals/Deals";
+import { DealsDataType } from "@/src/api/deals/deals.type";
 
 export default function BestDeals() {
   const { data, isLoading, isError } = useGetDealsIds();
@@ -18,8 +18,8 @@ export default function BestDeals() {
           <Stack
             sx={{
               gap: 5,
-              flexDirection: 'row',
-              overflowX: 'auto',
+              flexDirection: "row",
+              overflowX: "auto",
               pb: 1,
             }}
           >

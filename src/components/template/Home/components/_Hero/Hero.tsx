@@ -1,18 +1,18 @@
-import { MainRoutes } from '@/src/constant/routes';
-import { Box, Button, Stack, Typography } from '@mui/material';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { MainRoutes } from "@/src/constant/routes";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import Image from "next/image";
+import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Autoplay,
   Navigation,
   Pagination,
   Scrollbar,
   Parallax,
-} from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+} from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 // const Hero = () => {
 //   return (
@@ -161,7 +161,7 @@ import 'swiper/css/pagination';
 
 const Hero = () => {
   return (
-    <Box component="section" sx={{ position: 'relative' }}>
+    <Box component="section" sx={{ position: "relative" }}>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -179,27 +179,29 @@ const Hero = () => {
         className="mySwiper"
       >
         <SwiperSlide>
-          <Image src="/globe2.jpg" alt="Shop" height={550} width={1600} />
+          <Box width={1920} height={854} position="relative">
+            <Image src="/globe2.jpg" alt="Shop" fill objectFit="cover" />
+          </Box>
           <Stack
             padding={5}
             borderRadius={3}
             sx={{
-              width: { xs: '50%', sm: '66%', lg: '33%' },
-              position: 'absolute',
-              top: { md: '7rem', xs: '1rem' },
-              left: { md: '7rem', xs: '1rem' },
+              width: { xs: "50%", sm: "66%", lg: "33%" },
+              position: "absolute",
+              top: { md: "7rem", xs: "1rem" },
+              left: { md: "7rem", xs: "1rem" },
               gap: { md: 5, sm: 4, xs: 1 },
-              backgroundColor: '#83dd5799',
+              backgroundColor: "#83dd5799",
             }}
           >
             <Typography
               variant="h1"
               sx={{
-                color: '#f1f1f1',
-                fontSize: '4vw',
-                lineHeight: '1.1',
-                fontWeight: 'bold',
-                textShadow: '-2px -2px 1px #000',
+                color: "#f1f1f1",
+                fontSize: "4vw",
+                lineHeight: "1.1",
+                fontWeight: "bold",
+                textShadow: "-2px -2px 1px #000",
               }}
             >
               Shopping And Department Store.
@@ -207,9 +209,9 @@ const Hero = () => {
             <Typography
               variant="body1"
               sx={{
-                color: '#f1f1f1',
-                fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
-                textShadow: '-1px -1px 0px #500',
+                color: "#f1f1f1",
+                fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
+                textShadow: "-1px -1px 0px #500",
               }}
             >
               by Shopping from our site you can get goods from all over the
@@ -219,14 +221,14 @@ const Hero = () => {
             <Button
               variant="contained"
               sx={{
-                bgcolor: '#166534',
-                fontWeight: '600',
+                bgcolor: "#166534",
+                fontWeight: "600",
                 px: 3,
                 py: 1,
-                borderRadius: '100px',
+                borderRadius: "100px",
                 width: 150,
-                ':hover': {
-                  bgcolor: '#16a34a',
+                ":hover": {
+                  bgcolor: "#16a34a",
                 },
               }}
             >
@@ -235,28 +237,30 @@ const Hero = () => {
           </Stack>
         </SwiperSlide>
         <SwiperSlide>
-          <Image src="/pig.png" alt="Shop" height={854} width={1920} />
+          <Box width={1920} height={854} position="relative">
+            <Image src="/pig.png" alt="Shop" fill objectFit="cover" />
+          </Box>
           <Stack
             data-swiper-parallax="-300"
             padding={5}
             borderRadius={3}
             sx={{
-              width: { xs: '50%', sm: '66%', lg: '33%' },
-              position: 'absolute',
-              top: { md: '7rem', xs: '1rem' },
-              left: { md: '7rem', xs: '1rem' },
+              width: { xs: "50%", sm: "66%", lg: "33%" },
+              position: "absolute",
+              top: { md: "7rem", xs: "1rem" },
+              left: { md: "7rem", xs: "1rem" },
               gap: { md: 5, sm: 4, xs: 1 },
-              backgroundColor: '#9e6cc855',
+              backgroundColor: "#9e6cc855",
             }}
           >
             <Typography
               variant="h1"
               sx={{
-                color: '#166534',
-                fontSize: '4vw',
-                lineHeight: '1.1',
-                fontWeight: 'bold',
-                textShadow: '-1px -1px 0px #fff',
+                color: "#166534",
+                fontSize: "4vw",
+                lineHeight: "1.1",
+                fontWeight: "bold",
+                textShadow: "-1px -1px 0px #fff",
               }}
             >
               Shopping And Department Store.
@@ -264,9 +268,9 @@ const Hero = () => {
             <Typography
               variant="body1"
               sx={{
-                color: '#000000',
-                fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
-                textShadow: '-1px -1px 0px #fff',
+                color: "#000000",
+                fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
+                textShadow: "-1px -1px 0px #fff",
               }}
             >
               we offer cashback service for some of our best products.
@@ -275,14 +279,14 @@ const Hero = () => {
             <Button
               variant="contained"
               sx={{
-                bgcolor: '#166534',
-                fontWeight: '600',
+                bgcolor: "#166534",
+                fontWeight: "600",
                 px: 3,
                 py: 1,
-                borderRadius: '100px',
+                borderRadius: "100px",
                 width: 150,
-                ':hover': {
-                  bgcolor: '#16a34a',
+                ":hover": {
+                  bgcolor: "#16a34a",
                 },
               }}
             >
@@ -291,27 +295,29 @@ const Hero = () => {
           </Stack>
         </SwiperSlide>
         <SwiperSlide>
-          <Image src="/onlineshop.jpg" alt="Shop" height={550} width={1600} />
+          <Box width={1920} height={854} position="relative">
+            <Image src="/onlineshop.jpg" alt="Shop" fill objectFit="cover" />
+          </Box>
           <Stack
             padding={5}
             borderRadius={3}
             sx={{
-              width: { xs: '50%', sm: '66%', lg: '33%' },
-              position: 'absolute',
-              top: { md: '7rem', xs: '1rem' },
-              left: { md: '7rem', xs: '1rem' },
+              width: { xs: "50%", sm: "66%", lg: "33%" },
+              position: "absolute",
+              top: { md: "7rem", xs: "1rem" },
+              left: { md: "7rem", xs: "1rem" },
               gap: { md: 5, sm: 4, xs: 1 },
-              backgroundColor: '#ee9f9799',
+              backgroundColor: "#ee9f9799",
             }}
           >
             <Typography
               variant="h1"
               sx={{
-                color: '#0f0f0f',
-                fontSize: '4vw',
-                lineHeight: '1.1',
-                fontWeight: 'bold',
-                textShadow: '-2px -2px 1px #fff',
+                color: "#0f0f0f",
+                fontSize: "4vw",
+                lineHeight: "1.1",
+                fontWeight: "bold",
+                textShadow: "-2px -2px 1px #fff",
               }}
             >
               Shopping And Department Store.
@@ -319,9 +325,9 @@ const Hero = () => {
             <Typography
               variant="body1"
               sx={{
-                color: '#0f0f0f',
-                fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
-                textShadow: '-1px -1px 0px #fff',
+                color: "#0f0f0f",
+                fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
+                textShadow: "-1px -1px 0px #fff",
               }}
             >
               Shopping is bit of a relaxing hobby for me, which is sometimes
@@ -331,14 +337,14 @@ const Hero = () => {
             <Button
               variant="contained"
               sx={{
-                bgcolor: '#166534',
-                fontWeight: '600',
+                bgcolor: "#166534",
+                fontWeight: "600",
                 px: 3,
                 py: 1,
-                borderRadius: '100px',
+                borderRadius: "100px",
                 width: 150,
-                ':hover': {
-                  bgcolor: '#16a34a',
+                ":hover": {
+                  bgcolor: "#16a34a",
                 },
               }}
             >
