@@ -1,4 +1,4 @@
-import { useUserContext } from "../../../../context/authContext";
+import { useUserContext } from "@/src/context/authContext";
 import {
   List,
   ListItem,
@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { AuthReducerAction, ROLES } from "../../../../types/enums";
+import { AuthReducerAction, ROLES } from "@/src/types/enums";
 import Link from "next/link";
 import { menuItems } from "./data";
 import { useRouter } from "next/router";
@@ -94,7 +94,9 @@ export default function Header({ isLogin }: HeaderProps) {
           "aria-labelledby": "user-text",
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={() => pushRouter(MainRoutes.PROFILE)}>
+          Profile
+        </MenuItem>
         {state.role === ROLES.admin || state.role === ROLES.moderator ? (
           <MenuItem onClick={() => pushRouter(MainRoutes.DASHBOARD)}>
             Dashboard

@@ -1,8 +1,8 @@
-import { Stack } from '@mui/material';
-import Hero from './components/_Hero/Hero';
-import Category from './components/_Category/Category';
-import BestDeals from './components/_BestDeals/BestDeals';
-import Brands from './components/_Brands/Brands';
+import { Stack } from "@mui/material";
+import Hero from "@/src/components/template/Home/components/_Hero/Hero";
+import Category from "@/src/components/template/Home/components/_Category/Category";
+import BestDeals from "@/src/components/template/Home/components/_BestDeals/BestDeals";
+import Brands from "@/src/components/template/Home/components/_Brands/Brands";
 
 export default function HomeTemplate() {
   return (

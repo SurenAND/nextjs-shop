@@ -1,11 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { clearUserCartApi, deleteCartApi,getCartByIdApi, updateCartApi } from './cart.api';
-import { CartDataType } from './cart.type';
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import {
+  clearUserCartApi,
+  deleteCartApi,
+  getCartByIdApi,
+  updateCartApi,
+} from "./cart.api";
+import { CartDataType } from "./cart.type";
 
-
-export const useGetCartById = (id:string) => {
+export const useGetCartById = (id: string) => {
   return useQuery<CartDataType[]>({
-    queryKey: ['cart',"single",id],
+    queryKey: ["cart", "single", id],
     queryFn: () => getCartByIdApi(id),
   });
 };
@@ -16,7 +20,7 @@ export const useDeleteCart = () => {
     mutationFn: (id: string) => deleteCartApi(id),
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['cart'],
+        queryKey: ["cart"],
       });
     },
   });
@@ -29,16 +33,11 @@ export const useUpdateCart = () => {
       updateCartApi(newProductInCart),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['cart'],
+        queryKey: ["cart"],
       });
     },
   });
 };
-
-
-
-
-
 
 export const useClearCart = () => {
   const queryClient = useQueryClient();
@@ -46,19 +45,8 @@ export const useClearCart = () => {
     mutationFn: (userId: string) => clearUserCartApi(userId),
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['cart'],
+        queryKey: ["cart"],
       });
     },
   });
 };
-// export const useGetUser = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation({
-//     mutationFn: (userId: string) => getUserApi(userId),
-//     onSuccess() {
-//       queryClient.invalidateQueries({
-//         queryKey: ["cart"],
-//       });
-//     },
-//   });
-// };

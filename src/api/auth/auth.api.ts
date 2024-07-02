@@ -1,5 +1,5 @@
-import api from "../config.api";
-import { UserDataType } from "./auth.type";
+import api from "@/src/api/config.api";
+import { UserDataType } from "@/src/api/auth/auth.type";
 
 export const getUserApi = async (email: string, password: string) => {
   const response = await api.get(`/users?email=${email}&password=${password}`);

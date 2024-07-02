@@ -3,9 +3,12 @@
     {
       "id": "1",
       "email": "ashkan@gmail.com",
-      "userName": "Ashkan",
+      "userName": "AshkanZ",
       "password": "1234",
-      "role": "moderator"
+      "role": "moderator",
+      "firstName": "Ashkan",
+      "lastName": "Zojaji",
+      "phoneNumber": "09388484231"
     },
     {
       "id": "2",

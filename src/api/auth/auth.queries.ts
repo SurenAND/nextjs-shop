@@ -1,11 +1,9 @@
-import { MainRoutes } from '@/src/constant/routes';
-import { useUserContext } from '@/src/context/authContext';
-import { generate_token } from '@/src/lib/helper';
-import { AuthReducerAction } from '@/src/types/enums';
-import { setCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { UserDataType } from './auth.type';
+import { MainRoutes } from "@/src/constant/routes";
+import { useUserContext } from "@/src/context/authContext";
+import { AuthReducerAction } from "@/src/types/enums";
+import { useRouter } from "next/router";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { UserDataType } from "@/src/api/auth/auth.type";
 import {
   createUserApi,
   deleteUserApi,
@@ -13,7 +11,7 @@ import {
   getUserByIdApi,
   getUsersApi,
   updateUserApi,
-} from './auth.api';
+} from "@/src/api/auth/auth.api";
 
 export const useLogin = (email: string, password: string) => {
   const router = useRouter();
@@ -49,7 +47,7 @@ export const useSignUp = () => {
 
 export const useGetUsers = () => {
   return useQuery<UserDataType>({
-    queryKey: ['users'],
+    queryKey: ["users"],
     queryFn: () => getUsersApi(),
     refetchOnMount: true,
   });
@@ -61,7 +59,7 @@ export const useUpdateUser = () => {
     mutationFn: (newUser: UserDataType) => updateUserApi(newUser),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['users'],
+        queryKey: ["users"],
       });
     },
   });
@@ -69,7 +67,7 @@ export const useUpdateUser = () => {
 
 export const useGetUserById = (id: string) => {
   return useQuery<UserDataType>({
-    queryKey: ['users', 'single', id],
+    queryKey: ["users", "single", id],
     queryFn: () => getUserByIdApi(id),
     refetchOnMount: true,
   });
