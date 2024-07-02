@@ -6,6 +6,7 @@ import {
   updateCartApi,
 } from "./cart.api";
 import { CartDataType } from "./cart.type";
+import { addProductToCartApi } from "./cart.api";
 
 export const useGetCartById = (id: string) => {
   return useQuery<CartDataType[]>({
@@ -43,6 +44,18 @@ export const useClearCart = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (userId: string) => clearUserCartApi(userId),
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ["cart"],
+      });
+    },
+  });
+};
+
+export const useAddProductToCart = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (product: CartDataType) => addProductToCartApi(product),
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: ["cart"],

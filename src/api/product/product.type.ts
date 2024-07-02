@@ -6,4 +6,5 @@ export type ProductDataType = {
   brand_name: string;
   image: string;
   description: string;
+  qty: number;
 };

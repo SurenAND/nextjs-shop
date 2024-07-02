@@ -5,6 +5,7 @@ import {
   deleteProductApi,
   getProductByCategoryApi,
   getProductByIdApi,
+  getProductByPriceApi,
   getProductListApi,
   updateProductApi,
 } from "@/src/api/product/product.api";
@@ -69,5 +70,18 @@ export const useUpdateProduct = () => {
         queryKey: ["products", "single", data.id],
       });
     },
+  });
+};
+
+export const useGetProductByPrice = (
+  category: string,
+  min: number,
+  max: number
+) => {
+  return useQuery<ProductDataType[]>({
+    queryKey: ["products", category, min, max],
+    queryFn: () => getProductByPriceApi(category, min, max),
+    enabled: !!min && !!max && !!category,
+    refetchOnMount: "always",
   });
 };

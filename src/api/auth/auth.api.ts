@@ -30,3 +30,13 @@ export const deleteUserApi = async (id: string) => {
   const response = await api.delete(`/users/${id}`);
   return response.data;
 };
+
+export const getUsersApi = async () => {
+  const response = await api.get("/users");
+  return response.data;
+};
+
+export const updateUserApi = async (user: UserDataType) => {
+  const response = await api.put(`/users/${user.id}`, user);
+  return response.data;
+};
