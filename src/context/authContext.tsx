@@ -5,18 +5,18 @@ import {
   useEffect,
   useReducer,
 } from "react";
-import { AuthReducerAction } from "../types/enums";
-import { AuthReducerActionType, AuthStateType } from "../types/types";
+import { AuthReducerAction } from "@/src/types/enums";
+import { AuthReducerActionType, AuthStateType } from "@/src/types/types";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
-import { generate_token } from "../lib/helper";
+import { generate_token } from "@/src/lib/helper";
 
 const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30 * 2);
-// milliseconds * seconds * minutes * hours * days * months
 
 const authInit = {
   isLogin: false,
   userName: "",
   role: "",
+  userId: "",
 };
 
 function authReducer(
@@ -28,25 +28,42 @@ function authReducer(
       setCookie("role", action.payload.role, {
         expires: expireDate,
       });
+      setCookie("id", action.payload.id, {
+        expires: expireDate,
+      });
       setCookie("userName", action.payload.userName, {
         expires: expireDate,
       });
       setCookie("token", generate_token(32), {
         expires: expireDate,
       });
+      setCookie("id", action.payload.id, {
+        expires: expireDate,
+      });
       return {
         isLogin: true,
         userName: action.payload.userName,
         role: action.payload.role,
+        userId: action.payload.id,
       };
     case AuthReducerAction.LOGOUT:
       deleteCookie("role");
       deleteCookie("userName");
       deleteCookie("token");
+      deleteCookie("id");
       return {
         isLogin: false,
         userName: "",
         role: "",
+        userId: "",
+      };
+    case AuthReducerAction.UPDATE_USER_NAME:
+      setCookie("userName", action.payload.userName, {
+        expires: expireDate,
+      });
+      return {
+        ...state,
+        userName: action.payload.userName,
       };
     default:
       return state;
@@ -70,12 +87,14 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
     const isLogin = getCookie("token") ?? false;
     const userName = getCookie("userName") ?? "";
     const role = getCookie("role") ?? "";
+    const id = getCookie("id") ?? "";
     if (isLogin) {
       dispatch({
         type: AuthReducerAction.LOGIN,
         payload: {
           userName,
           role,
+          id,
         },
       });
     }

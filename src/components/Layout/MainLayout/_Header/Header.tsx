@@ -1,4 +1,4 @@
-import { useUserContext } from "../../../../context/authContext";
+import { useUserContext } from "@/src/context/authContext";
 import {
   List,
   ListItem,
@@ -8,13 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { AuthReducerAction, ROLES } from "../../../../types/enums";
+import { AuthReducerAction, ROLES } from "@/src/types/enums";
 import Link from "next/link";
 import { menuItems } from "./data";
 import { useRouter } from "next/router";
 import { MainRoutes } from "@/src/constant/routes";
 import Search from "@/src/components/shared/Search/Search";
 import Image from "next/image";
+import useCheckoutStore from "@/src/components/template/Cart/store/usecheckoutStore";
 
 type HeaderProps = {
   isLogin: boolean;
@@ -23,7 +24,7 @@ type HeaderProps = {
 export default function Header({ isLogin }: HeaderProps) {
   const { pathname, push: pushRouter } = useRouter();
   const { state, dispatch } = useUserContext();
-
+  const { reset } = useCheckoutStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -36,10 +37,14 @@ export default function Header({ isLogin }: HeaderProps) {
   };
 
   const handleLogout = () => {
+    reset()
     dispatch({
       type: AuthReducerAction.LOGOUT,
     });
     handleClose();
+    if (pathname === '/cart') {
+      pushRouter('/');
+    }
   };
 
   return (
@@ -89,7 +94,9 @@ export default function Header({ isLogin }: HeaderProps) {
           "aria-labelledby": "user-text",
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={() => pushRouter(MainRoutes.PROFILE)}>
+          Profile
+        </MenuItem>
         {state.role === ROLES.admin || state.role === ROLES.moderator ? (
           <MenuItem onClick={() => pushRouter(MainRoutes.DASHBOARD)}>
             Dashboard

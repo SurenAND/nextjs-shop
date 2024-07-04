@@ -1,18 +1,18 @@
 import { MainRoutes } from "@/src/constant/routes";
 import { useUserContext } from "@/src/context/authContext";
-import { generate_token } from "@/src/lib/helper";
 import { AuthReducerAction } from "@/src/types/enums";
-import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
-
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { UserDataType } from "./auth.type";
+import { UserDataType } from "@/src/api/auth/auth.type";
 import {
   createUserApi,
+  deleteUserApi,
   getUserApi,
+  getUserByIdApi,
   getUsersApi,
   updateUserApi,
-} from "./auth.api";
+} from "@/src/api/auth/auth.api";
+
 
 export const useLogin = (email: string, password: string) => {
   const router = useRouter();
@@ -46,10 +46,31 @@ export const useSignUp = () => {
   });
 };
 
+export const useGetUserById = (id: string) => {
+  return useQuery<UserDataType>({
+    queryKey: ["users", "single", id],
+    queryFn: () => getUserByIdApi(id),
+    refetchOnMount: true,
+  });
+};
+
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteUserApi(id),
+    onSuccess() {
+      queryClient.invalidateQueries({
+        queryKey: ["users"],
+      });
+    },
+  });
+};
+
 export const useGetUsers = () => {
   return useQuery<UserDataType>({
     queryKey: ["users"],
     queryFn: () => getUsersApi(),
+    refetchOnMount: true,
   });
 };
 
@@ -64,4 +85,3 @@ export const useUpdateUser = () => {
     },
   });
 };
-

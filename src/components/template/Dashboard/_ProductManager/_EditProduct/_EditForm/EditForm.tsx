@@ -19,7 +19,7 @@ import {
   useState,
 } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import UploadFileButton from "./_UploadButton/UploadButton";
+import UploadFileButton from "@/src/components/template/Dashboard/_ProductManager/_EditProduct/_EditForm/_UploadButton/UploadButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   useGetProductById,

@@ -104,11 +104,12 @@ function DeleteProduct() {
       alignItems="center"
       justifyContent="center"
       height="100vh"
+      sx={{ userSelect: "none" }}
     >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
         Delete Product
       </Typography>
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 700, width: "70%" }}>
         <DataGrid
           key={data?.id}
           showCellVerticalBorder
@@ -121,7 +122,6 @@ function DeleteProduct() {
               paginationModel: { page: 0, pageSize: 5 },
             },
           }}
-          // pageSizeOptions={[5, 10, 15]}
         />
       </Box>
     </Stack>

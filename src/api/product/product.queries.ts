@@ -1,13 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { ProductDataType } from "./product.type";
+import { ProductDataType } from "@/src/api/product/product.type";
 import {
   createProductApi,
   deleteProductApi,
   getProductByCategoryApi,
   getProductByIdApi,
+  getProductByPriceApi,
   getProductListApi,
   updateProductApi,
-} from "./product.api";
+} from "@/src/api/product/product.api";
 
 export const useGetProducts = () => {
   return useQuery<ProductDataType>({
@@ -22,6 +23,7 @@ export const useGetProductById = (productId: string) => {
     queryKey: ["products", "single", productId],
     queryFn: () => getProductByIdApi(productId),
     refetchOnMount: "always",
+    enabled: !!productId,
   });
 };
 
@@ -68,5 +70,18 @@ export const useUpdateProduct = () => {
         queryKey: ["products", "single", data.id],
       });
     },
+  });
+};
+
+export const useGetProductByPrice = (
+  category: string,
+  min: number,
+  max: number
+) => {
+  return useQuery<ProductDataType[]>({
+    queryKey: ["products", category, min, max],
+    queryFn: () => getProductByPriceApi(category, min, max),
+    enabled: !!min && !!max && !!category,
+    refetchOnMount: "always",
   });
 };

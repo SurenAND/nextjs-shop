@@ -10,13 +10,14 @@ import {
 } from "@mui/material";
 import { orange } from "@mui/material/colors";
 import { useEffect, useState } from "react";
-import { generate_token } from "../../../lib/helper";
+import { generate_token } from "@/src/lib/helper";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { MainRoutes } from "@/src/constant/routes";
 import Image from "next/image";
 import { useLogin, useSignUp } from "@/src/api/auth/auth.queries";
+import { Toaster, toast } from "sonner";
 
 function RegisterTemplate() {
   const router = useRouter();
@@ -28,7 +29,7 @@ function RegisterTemplate() {
 
   const [checked, setChecked] = useState(false);
 
-  const { mutate: loginMutate } = useLogin(email, password);
+  const { mutate: loginMutate, isError } = useLogin(email, password);
   const { mutate: signupMutate } = useSignUp();
 
   const handlePageToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +41,9 @@ function RegisterTemplate() {
 
   const handleLogin = () => {
     loginMutate();
+    if (isError) {
+      toast.error("Invalid email or password"); // not work don't know why
+    }
   };
 
   const handleSignUp = () => {
@@ -70,6 +74,7 @@ function RegisterTemplate() {
       }}
       component="main"
     >
+      <Toaster />
       <Container
         sx={{
           padding: "40px",

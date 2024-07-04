@@ -66,7 +66,13 @@ export default function Inventory() {
   };
 
   return (
-    <Stack spacing={5} alignItems="center">
+    <Stack
+      spacing={5}
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+      sx={{ userSelect: "none" }}
+    >
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
         Product Inventory
       </Typography>
@@ -87,7 +93,6 @@ export default function Inventory() {
               paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          // pageSizeOptions={[10, 25, 50]}
         />
       </Box>
       <Button

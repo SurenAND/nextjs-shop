@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from "react";
-import Header from "./_Header/Header";
-import Sidebar from "./_Sidebar/Sidebar";
+import Header from "@/src/components/Layout/DashboardLayout/_Header/Header";
+import Sidebar from "@/src/components/Layout/DashboardLayout/_Sidebar/Sidebar";
 import { Box, Stack } from "@mui/material";
 
 export const drawerWidth = 270;
