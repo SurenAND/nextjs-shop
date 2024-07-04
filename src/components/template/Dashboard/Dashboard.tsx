@@ -9,6 +9,7 @@ import UsersManager from "@/src/components/template/Dashboard/_UserManager/_User
 import AdminsManager from "@/src/components/template/Dashboard/_UserManager/_Admins/Admins";
 import Orders from "@/src/components/template/Dashboard/_Orders/Orders";
 
+
 function DashboardTemplate() {
   const searchParams = useSearchParams().get("view");
   const { state } = useUserContext();
@@ -21,7 +22,6 @@ function DashboardTemplate() {
       {searchParams === "users-manager" && <UsersManager />}
       {searchParams === "admin-manager" && <AdminsManager />}
       {searchParams === "orders" && <Orders />}
-
       {!searchParams && (
         <Stack
           spacing={2}

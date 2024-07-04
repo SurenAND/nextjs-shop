@@ -96,7 +96,6 @@ export default function AdminsManager() {
               paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          // pageSizeOptions={[10, 25, 50]}
         />
       </Box>
       <Button
