@@ -10,7 +10,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useUserContext } from "@/src/context/authContext";
 import { useGetUserById, useUpdateUser } from "@/src/api/auth/auth.queries";
 import { useEffect } from "react";
-import { UserDataType } from "@/src/api/auth/auth.type";
+import { Toaster, toast } from "sonner";
 
 const ChangePassword = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -28,15 +28,20 @@ const ChangePassword = () => {
   }, [userData, reset]);
 
   const onSubmit = (data: FieldValues) => {
-    updateUser({
-      ...userData,
-      id: state.userId,
-      password: data.newPassword,
-    });
+    if (userData?.password !== data.oldPassword) {
+      toast.error("Old password is incorrect");
+    } else {
+      updateUser({
+        ...userData,
+        id: state.userId,
+        password: data.newPassword,
+      });
+    }
   };
 
   return (
     <Stack width="100%" alignItems="center" height="75vh" p={5} gap={8}>
+      <Toaster />
       <Stack
         width="100%"
         flexDirection="row"

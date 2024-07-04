@@ -111,7 +111,7 @@ function ProductsTable({
       <Typography variant="h4" fontWeight={900} textTransform="uppercase">
         Edit Products
       </Typography>
-      <Box sx={{ height: 700, width: "100%" }}>
+      <Box sx={{ height: 700, width: "70%" }}>
         <DataGrid
           key={data?.id}
           showCellVerticalBorder
@@ -124,7 +124,6 @@ function ProductsTable({
               paginationModel: { page: 0, pageSize: 5 },
             },
           }}
-          // pageSizeOptions={[5, 10, 15]}
         />
       </Box>
     </Stack>

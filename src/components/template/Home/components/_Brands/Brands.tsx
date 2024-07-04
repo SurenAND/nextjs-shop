@@ -1,7 +1,7 @@
-import { useGetBrands } from '@/src/api/brand/brand.queries';
-import { BrandsDataType } from '@/src/api/brand/brand.type';
-import BrandCardComp from '@/src/components/shared/BrandCard/BrandCard';
-import { Box, Stack, Typography } from '@mui/material';
+import { useGetBrands } from "@/src/api/brand/brand.queries";
+import { BrandsDataType } from "@/src/api/brand/brand.type";
+import BrandCardComp from "@/src/components/shared/BrandCard/BrandCard";
+import { Box, Stack, Typography } from "@mui/material";
 
 const Brands = () => {
   const { data, isLoading, isError } = useGetBrands();
@@ -24,9 +24,10 @@ const Brands = () => {
             component="section"
             sx={{
               p: 4,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
               gap: 5,
+              overflowX: "auto",
             }}
           >
             {data?.map((item: BrandsDataType) => {
