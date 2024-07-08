@@ -7,14 +7,8 @@
       "password": "1234",
       "role": "moderator",
       "firstName": "Ashkan",
-<<<<<<< HEAD
-      "lastName": "zojaji",
-      "phoneNumber": "09101111111",
-      "address": "shiraz "
-=======
       "lastName": "Zojaji",
       "phoneNumber": "09388484231"
->>>>>>> 1b1e5638163cc3a7044c89459c9b29495458e691
     },
     {
       "id": "2",
@@ -146,11 +140,7 @@
   "products": [
     {
       "name": "1984",
-<<<<<<< HEAD
-      "qty": 7,
-=======
       "qty": 10,
->>>>>>> 1b1e5638163cc3a7044c89459c9b29495458e691
       "price": 300,
       "description": "1984 is a dystopian novella by George Orwell published in 1949, which follows the life of Winston Smith, a low ranking member of 'the Party', who is frustrated by the omnipresent eyes of the party, and its ominous ruler Big Brother.",
       "category": "books",
