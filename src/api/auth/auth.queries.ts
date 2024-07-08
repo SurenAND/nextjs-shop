@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { MainRoutes } from '@/src/constant/routes';
 import { useUserContext } from '@/src/context/authContext';
 import { AuthReducerAction } from '@/src/types/enums';
@@ -6,14 +5,6 @@ import { AuthReducerAction } from '@/src/types/enums';
 import { useRouter } from 'next/router';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { UserDataType } from './auth.type';
-=======
-import { MainRoutes } from "@/src/constant/routes";
-import { useUserContext } from "@/src/context/authContext";
-import { AuthReducerAction } from "@/src/types/enums";
-import { useRouter } from "next/router";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { UserDataType } from "@/src/api/auth/auth.type";
->>>>>>> 1b1e5638163cc3a7044c89459c9b29495458e691
 import {
   createUserApi,
   deleteUserApi,
