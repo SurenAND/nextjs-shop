@@ -180,13 +180,71 @@ const Hero = () => {
       >
         <SwiperSlide>
           <Box width={1920} height={854} position="relative">
+            <Image src="/landing.webp" alt="Shop" fill objectFit="cover" />
+          </Box>
+          <Stack
+            padding={5}
+            borderRadius={3}
+            sx={{
+              width: { xs: "50%", sm: "66%", lg: "44%" },
+              position: "absolute",
+              top: { md: "7rem", xs: "1rem" },
+              left: { md: "7rem", xs: "1rem" },
+              gap: { md: 5, sm: 4, xs: 1 },
+              backgroundColor: "#83dd5799",
+            }}
+          >
+            <Typography
+              variant="h1"
+              sx={{
+                color: "#f1f1f1",
+                fontSize: "4vw",
+                lineHeight: "1.1",
+                fontWeight: "bold",
+                textShadow: "-2px -2px 1px #000",
+              }}
+            >
+              Shopping And Department Store.
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                color: "#f1f1f1",
+                fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
+                textShadow: "-1px -1px 0px #500",
+              }}
+            >
+              by Shopping from our site you can get goods from all over the
+              globe.
+            </Typography>
+
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "#166534",
+                fontWeight: "600",
+                px: 3,
+                py: 1,
+                borderRadius: "100px",
+                width: 150,
+                ":hover": {
+                  bgcolor: "#16a34a",
+                },
+              }}
+            >
+              <Link href={MainRoutes.ABOUT_US}>Learn More</Link>
+            </Button>
+          </Stack>
+        </SwiperSlide>
+        <SwiperSlide>
+          <Box width={1920} height={854} position="relative">
             <Image src="/globe2.jpg" alt="Shop" fill objectFit="cover" />
           </Box>
           <Stack
             padding={5}
             borderRadius={3}
             sx={{
-              width: { xs: "50%", sm: "66%", lg: "33%" },
+              width: { xs: "50%", sm: "66%", lg: "44%" },
               position: "absolute",
               top: { md: "7rem", xs: "1rem" },
               left: { md: "7rem", xs: "1rem" },
@@ -245,7 +303,7 @@ const Hero = () => {
             padding={5}
             borderRadius={3}
             sx={{
-              width: { xs: "50%", sm: "66%", lg: "33%" },
+              width: { xs: "50%", sm: "66%", lg: "44%" },
               position: "absolute",
               top: { md: "7rem", xs: "1rem" },
               left: { md: "7rem", xs: "1rem" },
@@ -302,7 +360,7 @@ const Hero = () => {
             padding={5}
             borderRadius={3}
             sx={{
-              width: { xs: "50%", sm: "66%", lg: "33%" },
+              width: { xs: "50%", sm: "66%", lg: "44%" },
               position: "absolute",
               top: { md: "7rem", xs: "1rem" },
               left: { md: "7rem", xs: "1rem" },

@@ -86,7 +86,7 @@ const ProductTemplate = ({ category, productId }: any) => {
         </Typography>
       )}
       {isError && (
-        <Typography variant="h2">Error Something BAd Happend</Typography>
+        <Typography variant="h2">Error Something Bad Happen</Typography>
       )}
       {data && (
         <Paper elevation={5} sx={{ borderRadius: "24px" }}>
@@ -103,8 +103,8 @@ const ProductTemplate = ({ category, productId }: any) => {
             </Box>
             <Box
               sx={{
-                paddingInlineStart: { lg: 24 },
-                width: { lg: "50%" },
+                paddingInlineStart: 3,
+                width: "50%",
               }}
             >
               <Typography

@@ -24,9 +24,11 @@ const CategoriesTemplate = ({ category }: any) => {
   const { data, isLoading, isError } = useGetProductByCategory(category);
   function filterByPrice(e: any) {
     const value = e.target.value;
-    const minMax = value.split("-");
-    setMin(minMax[0]);
-    setMax(minMax[1]);
+    if (value) {
+      const minMax = value?.split("-");
+      setMin(minMax[0]);
+      setMax(minMax[1]);
+    }
   }
 
   return (
@@ -39,12 +41,12 @@ const CategoriesTemplate = ({ category }: any) => {
         textAlign="center"
         my={5}
       >
-        <Typography variant="h4" mb={3}>
+        <Typography variant="h4" mb={3} textTransform="uppercase">
           Filter
         </Typography>
-        <Stack>
+        <Stack alignItems="center">
           <FormLabel>By Price:</FormLabel>
-          <RadioGroup>
+          <RadioGroup sx={{ p: 2 }}>
             <FormControlLabel
               value="0-100"
               control={<Radio />}
